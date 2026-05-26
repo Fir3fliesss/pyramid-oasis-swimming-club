@@ -743,9 +743,16 @@
       margin-bottom: 56px;
     }
 
-    .testi-grid {
+    .testi-wrapper {
       display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .testi-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
 
@@ -755,18 +762,12 @@
       border-radius: 24px;
       padding: 32px;
       transition: all 0.3s ease;
+      animation: fadeInUp 0.5s ease both;
     }
 
     .testi-card:hover {
       border-color: rgba(0,200,224,0.2);
       transform: translateY(-4px);
-    }
-
-    .testi-card.large {
-      grid-row: span 2;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
 
     .testi-stars {
@@ -783,10 +784,6 @@
       color: rgba(255,255,255,0.85);
       font-style: italic;
       margin-bottom: 24px;
-    }
-
-    .testi-card.large .testi-text {
-      font-size: 1.4rem;
     }
 
     .testi-author {
@@ -818,6 +815,88 @@
     .testi-role {
       font-size: 0.78rem;
       color: rgba(255,255,255,0.4);
+    }
+
+    /* Empty state */
+    .testi-empty {
+      grid-column: 1 / -1;
+      background: rgba(255,255,255,0.02);
+      border: 2px dashed rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 48px 32px;
+      text-align: center;
+      color: rgba(255,255,255,0.5);
+    }
+    
+    .testi-empty-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.7;
+    }
+
+    .testi-empty-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    /* Feedback Form Card */
+    .feedback-card {
+      background: var(--deep);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 36px 32px;
+      position: sticky;
+      top: 100px;
+      z-index: 10;
+    }
+
+    .feedback-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .feedback-subtitle {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 24px;
+    }
+
+    /* Interactive Stars Selector */
+    .rating-select {
+      display: flex;
+      gap: 8px;
+      font-size: 2rem;
+      cursor: pointer;
+      margin-bottom: 4px;
+      user-select: none;
+    }
+
+    .rating-select span {
+      color: rgba(255,255,255,0.15);
+      transition: color 0.15s, transform 0.15s;
+    }
+
+    .rating-select span.active {
+      color: var(--gold);
+    }
+
+    .rating-select span:hover {
+      transform: scale(1.2);
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* ── FAQ ── */
@@ -982,7 +1061,8 @@
     }
 
     .form-group input,
-    .form-group select {
+    .form-group select,
+    .form-group textarea {
       width: 100%;
       padding: 14px 18px;
       background: rgba(255,255,255,0.05);
@@ -997,7 +1077,8 @@
     }
 
     .form-group input:focus,
-    .form-group select:focus {
+    .form-group select:focus,
+    .form-group textarea:focus {
       border-color: rgba(0,200,224,0.4);
       background: rgba(0,200,224,0.05);
       box-shadow: 0 0 0 3px rgba(0,200,224,0.08);
@@ -1233,8 +1314,8 @@
       .features-right .stat-box:first-child { grid-column: auto; }
       .program-cards { grid-template-columns: 1fr; }
       .schedule-grid { grid-template-columns: 1fr; }
-      .testi-grid { grid-template-columns: 1fr; }
-      .testi-card.large { grid-row: auto; }
+      .testi-wrapper { grid-template-columns: 1fr; gap: 40px; }
+      .testi-list { grid-template-columns: 1fr; }
       footer { flex-direction: column; text-align: center; padding: 32px 28px; }
     }
 
@@ -1466,51 +1547,59 @@
       <span class="section-label reveal">Testimoni</span>
       <h2 class="section-title reveal">Kata mereka<br>yang sudah bergabung</h2>
     </div>
-    <div class="testi-grid">
-      <div class="testi-card large reveal">
-        <div>
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Anak saya yang awalnya takut air, sekarang sudah bisa renang gaya bebas dalam 2 bulan. Pelatihnya sabar sekali dan anak-anak senang banget latihan di sini. Recommended banget!"</p>
-        </div>
-        <div class="testi-author">
-          <div class="testi-avatar">SR</div>
-          <div>
-            <div class="testi-name">Sri Rahayu</div>
-            <div class="testi-role">Orang tua peserta kelas Pemula</div>
-          </div>
+    
+    <div class="testi-wrapper reveal">
+      <!-- Kolom Kiri: Daftar Testimoni -->
+      <div class="testi-list-container">
+        <div id="testiList" class="testi-list">
+          <!-- Testimoni akan di-render secara dinamis di sini -->
         </div>
       </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Pelatihnya profesional dan perhatian. Teknik renang saya berkembang pesat sejak bergabung di sini."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">BW</div>
-          <div>
-            <div class="testi-name">Budi Wibowo</div>
-            <div class="testi-role">Peserta kelas Pemula</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Fasilitas bersih, kolam nyaman, dan jadwal sangat fleksibel. Cocok buat yang sibuk sekolah."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">DN</div>
-          <div>
-            <div class="testi-name">Dina Nuraini</div>
-            <div class="testi-role">Peserta kelas Atlet</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Program atlet membantu saya siap kompetisi. Pelatih tahu persis cara memaksimalkan waktu latihan."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">RA</div>
-          <div>
-            <div class="testi-name">Rizky Aditya</div>
-            <div class="testi-role">Peserta kelas Atlet</div>
-          </div>
+      
+      <!-- Kolom Kanan: Form Umpan Balik -->
+      <div class="feedback-card-container">
+        <div class="feedback-card">
+          <div class="feedback-title">Kirim Feedback Anda</div>
+          <div class="feedback-subtitle">Bagikan pengalaman Anda berlatih bersama kami</div>
+          <form id="formFeedback" onsubmit="tambahFeedback(event)" autocomplete="off">
+            <div class="form-group">
+              <label>Nama Lengkap</label>
+              <input type="text" name="namaFeedback" placeholder="Masukkan nama lengkap Anda" required autocomplete="off" spellcheck="false">
+            </div>
+            
+            <div class="form-group">
+              <label>Status / Peran</label>
+              <select name="peranFeedback" required>
+                <option value="">Pilih status Anda</option>
+                <option value="Peserta kelas Pemula">Peserta kelas Pemula</option>
+                <option value="Peserta kelas Atlet">Peserta kelas Atlet</option>
+                <option value="Orang tua peserta kelas Pemula">Orang tua peserta kelas Pemula</option>
+                <option value="Orang tua peserta kelas Atlet">Orang tua peserta kelas Atlet</option>
+                <option value="Umum">Umum / Lainnya</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Rating</label>
+              <div class="rating-select" id="ratingSelect">
+                <span data-value="1">★</span>
+                <span data-value="2">★</span>
+                <span data-value="3">★</span>
+                <span data-value="4">★</span>
+                <span data-value="5">★</span>
+              </div>
+              <input type="hidden" name="ratingFeedback" id="ratingInput" value="5" required>
+            </div>
+            
+            <div class="form-group">
+              <label>Pesan Ulasan</label>
+              <textarea name="pesanFeedback" placeholder="Tulis ulasan Anda di sini..." rows="4" required></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn" style="margin-top: 16px;">
+              ✨ Kirim Ulasan
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -1778,6 +1867,149 @@
     const msg = `Halo Pyramid Oasis! 🏊‍♂️\n\nSaya ingin mendaftar:\n👤 Nama: ${nama}\n🎂 Umur: ${umur} tahun\n📚 Program: ${program}\n⏰ Sesi: ${sesi}\n📱 WA: ${wa}\n\nMohon info selanjutnya. Terima kasih!`;
     window.open('https://wa.me/6285285550650?text=' + encodeURIComponent(msg), '_blank');
   }
+
+  // LOGIKA RATINGS INTERAKTIF PADA FORM FEEDBACK
+  const stars = document.querySelectorAll('#ratingSelect span');
+  const ratingInput = document.getElementById('ratingInput');
+  
+  stars.forEach(star => {
+    star.addEventListener('click', () => {
+      const val = parseInt(star.getAttribute('data-value'));
+      ratingInput.value = val;
+      updateStars(val);
+    });
+    
+    star.addEventListener('mouseover', () => {
+      const val = parseInt(star.getAttribute('data-value'));
+      highlightStars(val);
+    });
+  });
+  
+  document.getElementById('ratingSelect').addEventListener('mouseleave', () => {
+    updateStars(parseInt(ratingInput.value));
+  });
+  
+  function updateStars(rating) {
+    stars.forEach(star => {
+      const val = parseInt(star.getAttribute('data-value'));
+      if (val <= rating) {
+        star.classList.add('active');
+      } else {
+        star.classList.remove('active');
+      }
+    });
+  }
+  
+  function highlightStars(rating) {
+    stars.forEach(star => {
+      const val = parseInt(star.getAttribute('data-value'));
+      if (val <= rating) {
+        star.classList.add('active');
+      } else {
+        star.classList.remove('active');
+      }
+    });
+  }
+  
+  // Set default state rating
+  updateStars(5);
+
+  // LOAD & RENDER FEEDBACK DARI LOCALSTORAGE
+  const testiList = document.getElementById('testiList');
+  
+  function getFeedback() {
+    const data = localStorage.getItem('pyramid_oasis_feedback');
+    return data ? JSON.parse(data) : [];
+  }
+  
+  function saveFeedback(feedbacks) {
+    localStorage.setItem('pyramid_oasis_feedback', JSON.stringify(feedbacks));
+  }
+  
+  function renderFeedback() {
+    const feedbacks = getFeedback();
+    testiList.innerHTML = '';
+    
+    if (feedbacks.length === 0) {
+      testiList.innerHTML = `
+        <div class="testi-empty">
+          <div class="testi-empty-icon">💬</div>
+          <div class="testi-empty-title">Belum Ada Feedback</div>
+          <p>Belum ada ulasan yang ditambahkan. Jadilah yang pertama membagikan ulasan Anda!</p>
+        </div>
+      `;
+      return;
+    }
+    
+    feedbacks.forEach(item => {
+      const starsStr = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
+      
+      const card = document.createElement('div');
+      card.className = 'testi-card';
+      card.innerHTML = `
+        <div class="testi-stars">${starsStr}</div>
+        <p class="testi-text">"${item.pesan}"</p>
+        <div class="testi-author">
+          <div class="testi-avatar">${item.inisial}</div>
+          <div>
+            <div class="testi-name">${item.nama}</div>
+            <div class="testi-role">${item.peran}</div>
+          </div>
+        </div>
+      `;
+      testiList.appendChild(card);
+    });
+  }
+  
+  // TAMBAH FEEDBACK BARU SECARA REAL-TIME
+  function tambahFeedback(e) {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const nama = fd.get('namaFeedback').trim();
+    const peran = fd.get('peranFeedback');
+    const rating = parseInt(fd.get('ratingFeedback'));
+    const pesan = fd.get('pesanFeedback').trim();
+    
+    if (!nama || !peran || !pesan) return;
+    
+    // Membuat inisial nama (maksimal 2 huruf)
+    const words = nama.split(/\s+/);
+    let inisial = '';
+    if (words.length >= 2) {
+      inisial = (words[0][0] + words[1][0]).toUpperCase();
+    } else if (words.length === 1 && words[0].length > 0) {
+      inisial = words[0].substring(0, 2).toUpperCase();
+    } else {
+      inisial = '??';
+    }
+    
+    const newFeedback = {
+      nama,
+      peran,
+      rating,
+      pesan,
+      inisial,
+      tanggal: new Date().toISOString()
+    };
+    
+    const feedbacks = getFeedback();
+    feedbacks.unshift(newFeedback); // Tambah di awal agar ulasan terbaru berada di atas
+    saveFeedback(feedbacks);
+    
+    // Render ulang secara real-time
+    renderFeedback();
+    
+    // Reset Formulir
+    e.target.reset();
+    ratingInput.value = '5';
+    updateStars(5);
+    
+    // Scroll mulus ke daftar ulasan terbaru
+    document.getElementById('testiList').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  
+  // Render pertama saat halaman dimuat
+  renderFeedback();
 </script>
 </body>
 </html>
