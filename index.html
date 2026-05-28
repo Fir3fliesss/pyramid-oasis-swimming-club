@@ -1917,7 +1917,14 @@
   // AUTO-SAVE TESTIMONI — GLOBAL DATABASE DENGAN JSONBIN-ZETA (CORS SUPPORTED)
   const DATABASE_URL = 'https://jsonbin-zeta.vercel.app/api/bins/UP5zoioNs_';
   const LOCAL_KEY = 'pyramid_oasis_user_feedback';
+  const CACHE_VERSION = 'v3';
   const testiList = document.getElementById('testiList');
+
+  // Hapus cache lama jika versi berubah (mencegah data contoh lama muncul)
+  if (localStorage.getItem('pyramid_oasis_cache_ver') !== CACHE_VERSION) {
+    localStorage.removeItem(LOCAL_KEY);
+    localStorage.setItem('pyramid_oasis_cache_ver', CACHE_VERSION);
+  }
 
   // Fallback jika API gagal diakses (kosong — user yang akan mengisi)
   const fallbackTestimoni = [];
