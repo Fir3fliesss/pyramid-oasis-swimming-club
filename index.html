@@ -1914,12 +1914,12 @@
   // Set default state rating
   updateStars(5);
 
-  // AUTO-SAVE TESTIMONI — GITHUB RAW URL + LOCALSTORAGE
-  const GITHUB_JSON_URL = 'https://raw.githubusercontent.com/Fir3fliesss/pyramid-oasis-swimming-club/main/testimoni.json';
+  // AUTO-SAVE TESTIMONI — GLOBAL DATABASE DENGAN JSONBIN-ZETA (CORS SUPPORTED)
+  const DATABASE_URL = 'https://jsonbin-zeta.vercel.app/api/bins/UP5zoioNs_';
   const LOCAL_KEY = 'pyramid_oasis_user_feedback';
   const testiList = document.getElementById('testiList');
 
-  // Fallback jika GitHub tidak bisa diakses (misal: buka file secara lokal)
+  // Fallback jika API gagal diakses
   const fallbackTestimoni = [
     { "nama": "Sri Rahayu", "peran": "Orang tua peserta kelas Pemula", "rating": 5, "pesan": "Anak saya yang awalnya takut air, sekarang sudah bisa renang gaya bebas dalam 2 bulan. Pelatihnya sabar sekali dan anak-anak senang banget latihan di sini. Recommended banget!", "inisial": "SR" },
     { "nama": "Budi Wibowo", "peran": "Peserta kelas Pemula", "rating": 5, "pesan": "Pelatihnya profesional dan perhatian. Teknik renang saya berkembang pesat sejak bergabung di sini.", "inisial": "BW" },
@@ -1927,30 +1927,26 @@
     { "nama": "Rizky Aditya", "peran": "Peserta kelas Atlet", "rating": 5, "pesan": "Program atlet membantu saya siap kompetisi. Pelatih tahu persis cara memaksimalkan waktu latihan.", "inisial": "RA" }
   ];
 
-  // Ambil ulasan dari GitHub (publik, terlihat semua orang)
-  async function getGithubTestimoni() {
+  // Ambil ulasan dari cloud database
+  async function getCloudTestimoni() {
     try {
-      const response = await fetch(GITHUB_JSON_URL + '?t=' + Date.now()); // cache-bust
-      if (!response.ok) throw new Error('GitHub fetch gagal');
+      const response = await fetch(DATABASE_URL);
+      if (!response.ok) throw new Error('Fetch database gagal');
       return await response.json();
     } catch (err) {
-      console.warn('Tidak bisa memuat dari GitHub, menggunakan data cadangan:', err);
-      return fallbackTestimoni;
+      console.warn('Gagal memuat ulasan dari cloud, menggunakan data cadangan:', err);
+      // Coba ambil dari cache lokal jika cloud tidak bisa diakses
+      const localCache = localStorage.getItem(LOCAL_KEY);
+      return localCache ? JSON.parse(localCache) : fallbackTestimoni;
     }
   }
 
-  // Ambil ulasan lokal dari pengunjung (dari localStorage)
-  function getLocalFeedback() {
-    const data = localStorage.getItem(LOCAL_KEY);
-    return data ? JSON.parse(data) : [];
-  }
-
-  // Simpan ulasan baru ke localStorage (auto-save)
-  function saveLocalFeedback(feedbacks) {
+  // Simpan ulasan ke cache lokal sebagai cadangan
+  function saveToLocalCache(feedbacks) {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(feedbacks));
   }
 
-  // Gabungkan ulasan dari GitHub + localStorage, lalu render
+  // Memuat dan merender ulasan dari cloud
   async function renderFeedback() {
     testiList.innerHTML = `
       <div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.6); padding: 40px 0;">
@@ -1958,15 +1954,14 @@
       </div>
     `;
 
-    const githubData = await getGithubTestimoni();
-    const localData = getLocalFeedback();
-
-    // Gabungkan: ulasan lokal (terbaru) di atas, lalu ulasan dari GitHub
-    const allFeedback = [...localData, ...githubData];
+    const allFeedback = await getCloudTestimoni();
+    
+    // Simpan ke cache lokal untuk backup
+    saveToLocalCache(allFeedback);
 
     testiList.innerHTML = '';
 
-    if (allFeedback.length === 0) {
+    if (!allFeedback || allFeedback.length === 0) {
       testiList.innerHTML = `
         <div class="testi-empty">
           <div class="testi-empty-icon">💬</div>
@@ -1996,7 +1991,7 @@
     });
   }
 
-  // TAMBAH FEEDBACK BARU — AUTO-SAVE KE LOCALSTORAGE + TAMPIL LANGSUNG
+  // TAMBAH FEEDBACK BARU — AUTO-SAVE KE DATABASE CLOUD
   async function tambahFeedback(e) {
     e.preventDefault();
     const form = e.target;
@@ -2034,10 +2029,45 @@
       tanggal: new Date().toISOString()
     };
 
-    // Auto-save: simpan ke localStorage langsung
-    const localFeedbacks = getLocalFeedback();
-    localFeedbacks.unshift(newFeedback);
-    saveLocalFeedback(localFeedbacks);
+    try {
+      // 1. Ambil ulasan terkini dari database
+      let currentFeedback = [];
+      try {
+        const response = await fetch(DATABASE_URL);
+        if (response.ok) {
+          currentFeedback = await response.json();
+        }
+      } catch (err) {
+        console.warn('Gagal fetch data lama sebelum PUT, mencoba data lokal cache:', err);
+        const localCache = localStorage.getItem(LOCAL_KEY);
+        currentFeedback = localCache ? JSON.parse(localCache) : [...fallbackTestimoni];
+      }
+
+      // 2. Sisipkan data baru di awal array
+      currentFeedback.unshift(newFeedback);
+
+      // 3. Simpan data yang diperbarui kembali ke database cloud
+      const putResponse = await fetch(DATABASE_URL, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(currentFeedback)
+      });
+
+      if (!putResponse.ok) throw new Error('Gagal memperbarui database cloud');
+
+      // 4. Update local cache
+      saveToLocalCache(currentFeedback);
+
+    } catch (err) {
+      console.error('Error saat menyimpan feedback:', err);
+      alert('Gagal mengirimkan ulasan secara online. Namun, ulasan Anda tetap disimpan di browser Anda.');
+      
+      // Simpan di local cache sebagai fallback darurat
+      const localCache = localStorage.getItem(LOCAL_KEY);
+      let localFeedbacks = localCache ? JSON.parse(localCache) : [...fallbackTestimoni];
+      localFeedbacks.unshift(newFeedback);
+      saveToLocalCache(localFeedbacks);
+    }
 
     // Render ulang semua ulasan secara real-time
     await renderFeedback();
@@ -2056,6 +2086,16 @@
 
   // Render awal saat halaman dimuat
   renderFeedback();
+
+  // Sinkronisasi otomatis setiap 30 detik untuk melihat ulasan baru dari orang lain
+  setInterval(async () => {
+    const form = document.getElementById('formFeedback');
+    const nama = form.querySelector('[name="namaFeedback"]').value.trim();
+    const pesan = form.querySelector('[name="pesanFeedback"]').value.trim();
+    if (!nama && !pesan) {
+      await renderFeedback();
+    }
+  }, 30000);
 </script>
 </body>
 </html>
