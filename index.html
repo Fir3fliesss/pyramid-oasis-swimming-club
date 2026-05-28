@@ -1914,8 +1914,9 @@
   // Set default state rating
   updateStars(5);
 
-  // AUTO-SAVE TESTIMONI — GLOBAL DATABASE DENGAN JSONBIN-ZETA (CORS SUPPORTED)
-  const DATABASE_URL = 'https://jsonbin-zeta.vercel.app/api/bins/UP5zoioNs_';
+  // AUTO-SAVE TESTIMONI — GLOBAL DATABASE DENGAN JSONBIN-ZETA (DILENGKAPI CORS PROXY)
+  const TARGET_URL = 'https://jsonbin-zeta.vercel.app/api/bins/UP5zoioNs_';
+  const DATABASE_URL = 'https://corsproxy.io/?url=' + encodeURIComponent(TARGET_URL);
   const LOCAL_KEY = 'pyramid_oasis_user_feedback';
   const CACHE_VERSION = 'v3';
   const testiList = document.getElementById('testiList');
