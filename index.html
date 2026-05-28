@@ -1914,11 +1914,13 @@
   // Set default state rating
   updateStars(5);
 
-  // AUTO-SAVE TESTIMONI — GLOBAL DATABASE DENGAN JSONBIN-ZETA (DILENGKAPI CORS PROXY)
-  const TARGET_URL = 'https://jsonbin-zeta.vercel.app/api/bins/UP5zoioNs_';
-  const DATABASE_URL = 'https://corsproxy.io/?url=' + encodeURIComponent(TARGET_URL);
+  // AUTO-SAVE TESTIMONI — GLOBAL DATABASE KVDB.IO (CORS PENUH, TERVERIFIKASI)
+  const KVDB_BUCKET = 'SpxJLmATtBmLWfQhDm81Pb';
+  const KVDB_KEY = 'testimoni';
+  const DATABASE_READ_URL = `https://kvdb.io/${KVDB_BUCKET}/${KVDB_KEY}`;
+  const DATABASE_WRITE_URL = `https://kvdb.io/${KVDB_BUCKET}/${KVDB_KEY}`;
   const LOCAL_KEY = 'pyramid_oasis_user_feedback';
-  const CACHE_VERSION = 'v3';
+  const CACHE_VERSION = 'v4';
   const testiList = document.getElementById('testiList');
 
   // Hapus cache lama jika versi berubah (mencegah data contoh lama muncul)
@@ -1930,15 +1932,22 @@
   // Fallback jika API gagal diakses (kosong — user yang akan mengisi)
   const fallbackTestimoni = [];
 
-  // Ambil ulasan dari cloud database
+  // Ambil ulasan dari cloud database (kvdb menyimpan sebagai plain text / JSON string)
   async function getCloudTestimoni() {
     try {
-      const response = await fetch(DATABASE_URL);
+      const response = await fetch(DATABASE_READ_URL);
       if (!response.ok) throw new Error('Fetch database gagal');
-      return await response.json();
+      const text = await response.text();
+      // kvdb menyimpan value sebagai string, kita parse JSON-nya
+      if (!text || text === 'null' || text === '') return [];
+      try {
+        const parsed = JSON.parse(text);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
     } catch (err) {
       console.warn('Gagal memuat ulasan dari cloud, menggunakan data cadangan:', err);
-      // Coba ambil dari cache lokal jika cloud tidak bisa diakses
       const localCache = localStorage.getItem(LOCAL_KEY);
       return localCache ? JSON.parse(localCache) : fallbackTestimoni;
     }
@@ -2047,12 +2056,16 @@
       // 1. Ambil ulasan terkini dari database
       let currentFeedback = [];
       try {
-        const response = await fetch(DATABASE_URL);
+        const response = await fetch(DATABASE_READ_URL);
         if (response.ok) {
-          currentFeedback = await response.json();
+          const text = await response.text();
+          if (text && text !== 'null' && text !== '') {
+            const parsed = JSON.parse(text);
+            currentFeedback = Array.isArray(parsed) ? parsed : [];
+          }
         }
       } catch (err) {
-        console.warn('Gagal fetch data lama sebelum PUT, mencoba data lokal cache:', err);
+        console.warn('Gagal fetch data lama, mencoba data lokal cache:', err);
         const localCache = localStorage.getItem(LOCAL_KEY);
         currentFeedback = localCache ? JSON.parse(localCache) : [...fallbackTestimoni];
       }
@@ -2060,10 +2073,10 @@
       // 2. Sisipkan data baru di awal array
       currentFeedback.unshift(newFeedback);
 
-      // 3. Simpan data yang diperbarui kembali ke database cloud
-      const putResponse = await fetch(DATABASE_URL, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+      // 3. Simpan data yang diperbarui ke database cloud (kvdb pakai POST dengan value sebagai string)
+      const putResponse = await fetch(DATABASE_WRITE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(currentFeedback)
       });
 
