@@ -1941,21 +1941,9 @@
     localStorage.setItem(LOCAL_KEY, JSON.stringify(feedbacks));
   }
 
-  // Memuat dan merender ulasan dari cloud
-  async function renderFeedback() {
-    testiList.innerHTML = `
-      <div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.6); padding: 40px 0;">
-        <span style="display:inline-block; font-size: 1rem; opacity: 0.8;">⏳ Memuat ulasan...</span>
-      </div>
-    `;
-
-    const allFeedback = await getCloudTestimoni();
-    
-    // Simpan ke cache lokal untuk backup
-    saveToLocalCache(allFeedback);
-
+  // Render ulasan ke dalam DOM (tanpa loading spinner)
+  function renderCards(allFeedback) {
     testiList.innerHTML = '';
-
     if (!allFeedback || allFeedback.length === 0) {
       testiList.innerHTML = `
         <div class="testi-empty">
@@ -1966,7 +1954,6 @@
       `;
       return;
     }
-
     allFeedback.forEach(item => {
       const starsStr = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
       const card = document.createElement('div');
@@ -1984,6 +1971,30 @@
       `;
       testiList.appendChild(card);
     });
+  }
+
+  // Memuat dan merender ulasan dari cloud (dengan loading spinner — untuk pertama kali)
+  async function renderFeedback() {
+    testiList.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.6); padding: 40px 0;">
+        <span style="display:inline-block; font-size: 1rem; opacity: 0.8;">⏳ Memuat ulasan...</span>
+      </div>
+    `;
+    const allFeedback = await getCloudTestimoni();
+    saveToLocalCache(allFeedback);
+    renderCards(allFeedback);
+  }
+
+  // Sinkronisasi diam-diam tanpa flash/kedip (untuk background refresh)
+  async function silentRefresh() {
+    const newData = await getCloudTestimoni();
+    const cached = localStorage.getItem(LOCAL_KEY);
+    const newStr = JSON.stringify(newData);
+    // Hanya update DOM jika ada perubahan data
+    if (newStr !== cached) {
+      saveToLocalCache(newData);
+      renderCards(newData);
+    }
   }
 
   // TAMBAH FEEDBACK BARU — AUTO-SAVE KE DATABASE CLOUD
@@ -2082,13 +2093,13 @@
   // Render awal saat halaman dimuat
   renderFeedback();
 
-  // Sinkronisasi otomatis setiap 30 detik untuk melihat ulasan baru dari orang lain
+  // Sinkronisasi otomatis setiap 30 detik — diam-diam tanpa kedip
   setInterval(async () => {
     const form = document.getElementById('formFeedback');
     const nama = form.querySelector('[name="namaFeedback"]').value.trim();
     const pesan = form.querySelector('[name="pesanFeedback"]').value.trim();
     if (!nama && !pesan) {
-      await renderFeedback();
+      await silentRefresh();
     }
   }, 30000);
 </script>
