@@ -1358,7 +1358,7 @@
     .splash-screen.dismissing {
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.6s ease-in-out 0.6s, visibility 0.6s ease-in-out 0.6s;
+      transition: opacity 0.6s ease-in-out 0.5s, visibility 0.6s ease-in-out 0.5s;
     }
     .splash-content {
       text-align: center;
@@ -1440,6 +1440,18 @@
       box-shadow: 0 12px 30px rgba(0,200,224,0.45);
     }
 
+    /* Website content zoom-out transition style */
+    .web-content-wrapper {
+      opacity: 0;
+      transform: scale(1.15);
+      transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+      transform-origin: center center;
+    }
+    .web-content-wrapper.revealed {
+      opacity: 1;
+      transform: scale(1);
+    }
+
     /* Entrance animations triggered on active class */
     #splashScreen.active .splash-logo {
       opacity: 1;
@@ -1459,10 +1471,10 @@
 
     /* Exit animations triggered on dismissing class */
     .splash-screen.dismissing .wave-icon {
-      transform: scale(15) !important;
-      opacity: 0 !important;
-      filter: blur(2px) !important;
-      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.2s, filter 1s ease;
+      transform: scale(25) !important;
+      opacity: 0.9 !important;
+      filter: blur(1px) !important;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.1s, filter 0.8s ease;
       transition-delay: 0s !important;
     }
     .splash-screen.dismissing .splash-logo-text,
@@ -1493,6 +1505,8 @@
     <button id="splashBtn" class="splash-btn">Mulai Eksplorasi →</button>
   </div>
 </div>
+
+<div id="webContent" class="web-content-wrapper">
 
 <!-- NAVBAR -->
 <nav id="navbar">
@@ -1931,6 +1945,8 @@
   </div>
 </footer>
 
+</div>
+
 <script>
   // SPLASH SCREEN
   const initSplash = () => {
@@ -1956,9 +1972,18 @@
     
     function dismissSplash() {
       splash.classList.add('dismissing');
+      
+      // Trigger zoom-out of web content
+      setTimeout(() => {
+        const webContent = document.getElementById('webContent');
+        if (webContent) {
+          webContent.classList.add('revealed');
+        }
+      }, 400);
+      
       setTimeout(() => {
         document.body.style.overflow = '';
-      }, 1200);
+      }, 1100);
     }
     
     if (splashBtn) {
