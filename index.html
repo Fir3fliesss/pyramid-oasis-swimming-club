@@ -1355,10 +1355,10 @@
       transition: background 0.05s ease;
       z-index: 1;
     }
-    .splash-screen.dismissing {
+     .splash-screen.zoom-out {
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.6s ease-in-out 0.5s, visibility 0.6s ease-in-out 0.5s;
+      transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
     }
     .splash-content {
       text-align: center;
@@ -1469,17 +1469,34 @@
       transition-delay: 0.6s;
     }
 
-    /* Exit animations triggered on dismissing class */
-    .splash-screen.dismissing .wave-icon {
+    /* Exit Phase 1: Zoom In only the profile wave-icon */
+    .splash-screen.zoom-in .wave-icon {
       transform: scale(25) !important;
-      opacity: 0.9 !important;
-      filter: blur(1px) !important;
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.1s, filter 0.8s ease;
+      opacity: 1 !important;
+      filter: blur(0px) !important;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
       transition-delay: 0s !important;
     }
-    .splash-screen.dismissing .splash-logo-text,
-    .splash-screen.dismissing .splash-title,
-    .splash-screen.dismissing .splash-btn {
+    .splash-screen.zoom-in .splash-logo-text,
+    .splash-screen.zoom-in .splash-title,
+    .splash-screen.zoom-in .splash-btn {
+      opacity: 0 !important;
+      transform: translateY(-20px) !important;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      transition-delay: 0s !important;
+    }
+
+    /* Exit Phase 2: Zoom Out from the profile and fade splash screen out */
+    .splash-screen.zoom-out .wave-icon {
+      transform: scale(0) !important;
+      opacity: 0 !important;
+      filter: blur(2px) !important;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, filter 0.6s ease;
+      transition-delay: 0s !important;
+    }
+    .splash-screen.zoom-out .splash-logo-text,
+    .splash-screen.zoom-out .splash-title,
+    .splash-screen.zoom-out .splash-btn {
       opacity: 0 !important;
       transform: translateY(-20px) !important;
       transition: transform 0.4s ease, opacity 0.4s ease;
@@ -1971,19 +1988,25 @@
     });
     
     function dismissSplash() {
-      splash.classList.add('dismissing');
+      // Step 1: Zoom In only the profile photo
+      splash.classList.remove('active');
+      splash.classList.add('zoom-in');
       
-      // Trigger zoom-out of web content
+      // Step 2: After 600ms (fully zoomed in), start zoom-out of photo and reveal website
       setTimeout(() => {
+        splash.classList.remove('zoom-in');
+        splash.classList.add('zoom-out');
+        
         const webContent = document.getElementById('webContent');
         if (webContent) {
           webContent.classList.add('revealed');
         }
-      }, 400);
+      }, 600);
       
+      // Step 3: Enable scrolling
       setTimeout(() => {
         document.body.style.overflow = '';
-      }, 1100);
+      }, 1400);
     }
     
     if (splashBtn) {
