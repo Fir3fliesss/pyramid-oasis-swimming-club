@@ -1358,6 +1358,7 @@
     .splash-screen.dismissing {
       opacity: 0;
       visibility: hidden;
+      transition: opacity 0.6s ease-in-out 0.6s, visibility 0.6s ease-in-out 0.6s;
     }
     .splash-content {
       text-align: center;
@@ -1454,15 +1455,17 @@
 
     /* Exit animations triggered on dismissing class */
     .splash-screen.dismissing .splash-logo {
-      transform: scale(6) !important;
+      transform: scale(8) !important;
       opacity: 0 !important;
-      filter: blur(8px) !important;
+      filter: blur(4px) !important;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.2s, filter 1s ease;
       transition-delay: 0s !important;
     }
     .splash-screen.dismissing .splash-title,
     .splash-screen.dismissing .splash-btn {
       opacity: 0 !important;
-      transform: translateY(-40px) !important;
+      transform: translateY(-20px) !important;
+      transition: transform 0.4s ease, opacity 0.4s ease;
       transition-delay: 0s !important;
     }
     @keyframes splashSpin {
@@ -1950,7 +1953,7 @@
       splash.classList.add('dismissing');
       setTimeout(() => {
         document.body.style.overflow = '';
-      }, 800);
+      }, 1200);
     }
     
     if (splashBtn) {
