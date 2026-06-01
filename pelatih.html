@@ -256,28 +256,31 @@
     /* ── PROFILE PHOTO ── */
     .profile-photo-wrapper {
       position: relative;
-      width: 150px; height: 150px;
-      margin: 0 auto 24px;
+      width: 200px;
+      height: 260px;
+      margin: 0 auto 28px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 3px solid rgba(0,200,224,0.4);
+      box-shadow: 0 0 28px rgba(0,200,224,0.2), 0 12px 40px rgba(0,0,0,0.4);
+      transition: all 0.4s ease;
     }
     .profile-photo-ring {
-      position: absolute; inset: -7px;
-      border-radius: 50%;
-      border: 2px solid rgba(0,200,224,0.25);
-      animation: ringPulse 3s ease infinite;
+      display: none;
     }
     .profile-photo {
-      width: 100%; height: 100%;
-      border-radius: 50%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       object-position: center top;
-      border: 3px solid rgba(0,200,224,0.45);
-      box-shadow: 0 0 28px rgba(0,200,224,0.25);
-      transition: all 0.4s ease;
       display: block;
+      transition: transform 0.5s ease;
+    }
+    .coach-card:hover .profile-photo-wrapper {
+      border-color: var(--aqua);
+      box-shadow: 0 0 40px rgba(0,200,224,0.45), 0 16px 48px rgba(0,0,0,0.5);
     }
     .coach-card:hover .profile-photo {
-      border-color: var(--aqua);
-      box-shadow: 0 0 40px rgba(0,200,224,0.5);
       transform: scale(1.04);
     }
 
