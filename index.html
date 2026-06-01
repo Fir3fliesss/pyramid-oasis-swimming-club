@@ -729,6 +729,183 @@
       color: var(--aqua);
     }
 
+    /* ── COACHES / PELATIH ── */
+    .coach-section {
+      background: var(--deep);
+      position: relative;
+    }
+
+    .coach-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .coach-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .coach-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .coach-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 24px;
+      padding: 40px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .coach-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--wave), var(--aqua));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .coach-card:hover {
+      background: rgba(26, 154, 239, 0.06);
+      border-color: rgba(0, 200, 224, 0.25);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 200, 224, 0.1);
+    }
+
+    .coach-card:hover::before {
+      opacity: 1;
+    }
+
+    .coach-avatar-wrapper {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 24px;
+    }
+
+    .coach-avatar-css {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--deep), var(--navy));
+      border: 3px solid rgba(0, 200, 224, 0.3);
+      box-shadow: 0 0 20px rgba(0, 200, 224, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--aqua);
+      letter-spacing: 1px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .coach-avatar-css::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, rgba(0,200,224,0.1) 0%, transparent 70%);
+    }
+
+    .coach-card:hover .coach-avatar-css {
+      border-color: var(--aqua);
+      box-shadow: 0 0 25px rgba(0, 200, 224, 0.4);
+      transform: scale(1.05);
+    }
+
+    .coach-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--aqua);
+      background: rgba(0, 200, 224, 0.1);
+      border: 1px solid rgba(0, 200, 224, 0.2);
+      padding: 6px 14px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .coach-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .coach-bio {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 24px;
+      min-height: 72px;
+    }
+
+    .coach-skills {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .coach-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 5px 12px;
+      border-radius: 100px;
+      transition: all 0.3s ease;
+    }
+
+    .coach-card:hover .coach-tag {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .coach-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 24px;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      color: var(--aqua);
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+
+    .stat-txt {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
     /* ── TESTIMONIALS ── */
     .testi-section {
       background: var(--navy);
@@ -1512,6 +1689,7 @@
       .features-right .stat-box:first-child { grid-column: auto; }
       .program-cards { grid-template-columns: 1fr; }
       .schedule-grid { grid-template-columns: 1fr; }
+      .coach-grid { grid-template-columns: 1fr; gap: 24px; }
       .testi-wrapper { grid-template-columns: 1fr; gap: 40px; }
       .testi-list { grid-template-columns: 1fr; }
       footer { flex-direction: column; text-align: center; padding: 32px 28px; }
@@ -1522,6 +1700,7 @@
       .hero-content { padding: 0 20px 60px; }
       .hero-stats { gap: 24px; flex-wrap: wrap; }
       section { padding: 56px 20px; }
+      .coach-card { padding: 28px 20px; }
       .programs-header { flex-direction: column; align-items: flex-start; gap: 20px; }
       .form-row { grid-template-columns: 1fr; }
       .register-form { padding: 28px 24px; }
@@ -1733,6 +1912,7 @@
     <li><a href="#beranda">Beranda</a></li>
     <li><a href="prestasi.html">Prestasi</a></li>
     <li><a href="galeri.html">Galeri</a></li>
+    <li><a href="#pelatih">Pelatih</a></li>
     <li><a href="#daftar" class="nav-cta">Daftar Sekarang</a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -1745,6 +1925,7 @@
   <a href="#beranda" onclick="closeMobile()">Beranda</a>
   <a href="prestasi.html" onclick="closeMobile()">Prestasi</a>
   <a href="galeri.html" onclick="closeMobile()">Galeri</a>
+  <a href="#pelatih" onclick="closeMobile()">Pelatih</a>
   <a href="#daftar" onclick="closeMobile()" style="color: var(--aqua); font-weight:700; margin-top:8px;">✦ Daftar Sekarang</a>
 </div>
 
@@ -1919,6 +2100,69 @@
       </div>
     </div>
     <p class="reveal" style="text-align:center; color:rgba(255,255,255,0.35); font-size:0.82rem; margin-top:28px;">Senin–Sabtu • Minggu & Hari Libur Nasional tutup</p>
+  </div>
+</section>
+
+<!-- PELATIH -->
+<section id="pelatih" class="coach-section">
+  <div class="coach-inner">
+    <div class="coach-header">
+      <span class="section-label reveal">Instruktur Kami</span>
+      <h2 class="section-title reveal">Daftar Pelatih<br>Profesional</h2>
+      <p class="section-desc reveal">Berlatih langsung dengan pelatih berlisensi nasional dan berpengalaman untuk hasil optimal.</p>
+    </div>
+    
+    <div class="coach-grid">
+      <!-- PELATIH 1: BANG INDRA -->
+      <div class="coach-card reveal">
+        <div class="coach-avatar-wrapper">
+          <div class="coach-avatar-css">BI</div>
+        </div>
+        <div class="coach-badge">Pelatih Utama & Admin</div>
+        <h3 class="coach-name">Bang Indra</h3>
+        <p class="coach-bio">Spesialis dalam pelatihan dasar renang (pemula) untuk anak-anak hingga dewasa, serta bimbingan administrasi klub yang ramah dan suportif.</p>
+        <div class="coach-skills">
+          <span class="coach-tag">Lisensi Nasional</span>
+          <span class="coach-tag">Renang Pemula</span>
+          <span class="coach-tag">Terapi Air</span>
+        </div>
+        <div class="coach-stats">
+          <div class="stat-item">
+            <span class="stat-num">7+</span>
+            <span class="stat-txt">Thn Pengalaman</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">200+</span>
+            <span class="stat-txt">Siswa Lulus</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PELATIH 2: KAK SAMBAS -->
+      <div class="coach-card reveal">
+        <div class="coach-avatar-wrapper">
+          <div class="coach-avatar-css">KS</div>
+        </div>
+        <div class="coach-badge">Pelatih Senior</div>
+        <h3 class="coach-name">Kak Sambas</h3>
+        <p class="coach-bio">Mantan atlet renang kompetisi regional dengan keahlian khusus penyempurnaan gaya (stroke analysis), stamina, dan pembinaan atlet muda berprestasi.</p>
+        <div class="coach-skills">
+          <span class="coach-tag">Eks-Atlet Regional</span>
+          <span class="coach-tag">Pembinaan Atlet</span>
+          <span class="coach-tag">Stroke Analysis</span>
+        </div>
+        <div class="coach-stats">
+          <div class="stat-item">
+            <span class="stat-num">5+</span>
+            <span class="stat-txt">Thn Pengalaman</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">50+</span>
+            <span class="stat-txt">Medali Atlet</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
