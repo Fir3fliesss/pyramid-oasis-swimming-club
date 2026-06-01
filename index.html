@@ -2023,34 +2023,6 @@
   </div>
 </section>
 
-<!-- MODAL PILIH NOMOR WHATSAPP -->
-<div id="waModalOverlay" class="wa-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="waModalTitle">
-  <div class="wa-modal">
-    <span class="wa-modal-icon">💬</span>
-    <div class="wa-modal-title" id="waModalTitle">Kirim ke Admin mana?</div>
-    <div class="wa-modal-desc">Pilih salah satu admin kami untuk menerima pendaftaran kamu.</div>
-    <div class="wa-modal-options">
-      <button class="wa-option-btn" id="waBtnIndra" onclick="kirimKeWA('6285285550650')">
-        <div class="wa-option-avatar">BI</div>
-        <div class="wa-option-info">
-          <div class="wa-option-name">Admin Bang Indra</div>
-          <div class="wa-option-number">+62 852-8555-0650</div>
-        </div>
-        <span class="wa-option-arrow">→</span>
-      </button>
-      <button class="wa-option-btn" id="waBtnSambas" onclick="kirimKeWA('6289635863397')">
-        <div class="wa-option-avatar">KS</div>
-        <div class="wa-option-info">
-          <div class="wa-option-name">Kak Sambas</div>
-          <div class="wa-option-number">+62 896-3586-3397</div>
-        </div>
-        <span class="wa-option-arrow">→</span>
-      </button>
-    </div>
-    <button class="wa-modal-cancel" onclick="tutupModalWA()">✕ Batal</button>
-  </div>
-</div>
-
 <!-- CONTACT -->
 <section id="kontak" class="contact-section">
   <div class="contact-inner">
@@ -2118,6 +2090,34 @@
   </div>
 </footer>
 
+</div>
+
+<!-- MODAL PILIH NOMOR WHATSAPP (di luar #webContent agar position:fixed bekerja normal) -->
+<div id="waModalOverlay" class="wa-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="waModalTitle">
+  <div class="wa-modal">
+    <span class="wa-modal-icon">💬</span>
+    <div class="wa-modal-title" id="waModalTitle">Kirim ke Admin mana?</div>
+    <div class="wa-modal-desc">Pilih salah satu admin kami untuk menerima pendaftaran kamu.</div>
+    <div class="wa-modal-options">
+      <button class="wa-option-btn" id="waBtnIndra" onclick="kirimKeWA('6285285550650')">
+        <div class="wa-option-avatar">BI</div>
+        <div class="wa-option-info">
+          <div class="wa-option-name">Admin Bang Indra</div>
+          <div class="wa-option-number">+62 852-8555-0650</div>
+        </div>
+        <span class="wa-option-arrow">→</span>
+      </button>
+      <button class="wa-option-btn" id="waBtnSambas" onclick="kirimKeWA('6289635863397')">
+        <div class="wa-option-avatar">KS</div>
+        <div class="wa-option-info">
+          <div class="wa-option-name">Kak Sambas</div>
+          <div class="wa-option-number">+62 896-3586-3397</div>
+        </div>
+        <span class="wa-option-arrow">→</span>
+      </button>
+    </div>
+    <button class="wa-modal-cancel" onclick="tutupModalWA()">✕ Batal</button>
+  </div>
 </div>
 
 <script>
