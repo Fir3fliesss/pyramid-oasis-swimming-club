@@ -1128,6 +1128,134 @@
       margin-top: 16px;
     }
 
+    /* ── MODAL PILIH WA ── */
+    .wa-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 6, 28, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .wa-modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .wa-modal {
+      background: linear-gradient(145deg, #0d1f3c, #0a1628);
+      border: 1px solid rgba(0,200,224,0.2);
+      border-radius: 24px;
+      padding: 36px 32px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,200,224,0.08);
+      transform: translateY(20px) scale(0.96);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      text-align: center;
+    }
+    .wa-modal-overlay.active .wa-modal {
+      transform: translateY(0) scale(1);
+    }
+    .wa-modal-icon {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .wa-modal-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .wa-modal-desc {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+    .wa-modal-options {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .wa-option-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      background: rgba(0,200,224,0.06);
+      border: 1.5px solid rgba(0,200,224,0.15);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: left;
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      text-decoration: none;
+      color: inherit;
+    }
+    .wa-option-btn:hover {
+      background: rgba(0,200,224,0.14);
+      border-color: rgba(0,200,224,0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,200,224,0.18);
+    }
+    .wa-option-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00c8e0, #0084ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .wa-option-info {
+      flex: 1;
+    }
+    .wa-option-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .wa-option-number {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .wa-option-arrow {
+      font-size: 1.1rem;
+      color: rgba(0,200,224,0.6);
+    }
+    .wa-modal-cancel {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: color 0.2s;
+      width: 100%;
+    }
+    .wa-modal-cancel:hover {
+      color: rgba(255,255,255,0.65);
+    }
+
+
     /* ── CONTACT ── */
     .contact-section {
       background: var(--deep);
@@ -1895,6 +2023,34 @@
   </div>
 </section>
 
+<!-- MODAL PILIH NOMOR WHATSAPP -->
+<div id="waModalOverlay" class="wa-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="waModalTitle">
+  <div class="wa-modal">
+    <span class="wa-modal-icon">💬</span>
+    <div class="wa-modal-title" id="waModalTitle">Kirim ke Admin mana?</div>
+    <div class="wa-modal-desc">Pilih salah satu admin kami untuk menerima pendaftaran kamu.</div>
+    <div class="wa-modal-options">
+      <button class="wa-option-btn" id="waBtnIndra" onclick="kirimKeWA('6285285550650')">
+        <div class="wa-option-avatar">BI</div>
+        <div class="wa-option-info">
+          <div class="wa-option-name">Admin Bang Indra</div>
+          <div class="wa-option-number">+62 852-8555-0650</div>
+        </div>
+        <span class="wa-option-arrow">→</span>
+      </button>
+      <button class="wa-option-btn" id="waBtnSambas" onclick="kirimKeWA('6289635863397')">
+        <div class="wa-option-avatar">KS</div>
+        <div class="wa-option-info">
+          <div class="wa-option-name">Kak Sambas</div>
+          <div class="wa-option-number">+62 896-3586-3397</div>
+        </div>
+        <span class="wa-option-arrow">→</span>
+      </button>
+    </div>
+    <button class="wa-modal-cancel" onclick="tutupModalWA()">✕ Batal</button>
+  </div>
+</div>
+
 <!-- CONTACT -->
 <section id="kontak" class="contact-section">
   <div class="contact-inner">
@@ -2103,7 +2259,9 @@
     });
   });
 
-  // FORM → WHATSAPP
+  // FORM → WHATSAPP (dengan modal pilih nomor)
+  let _waMsg = '';
+
   function kirimWA(e) {
     e.preventDefault();
     const fd = new FormData(e.target);
@@ -2112,8 +2270,32 @@
     const program = fd.get('program');
     const wa = fd.get('whatsapp');
     const sesi = fd.get('sesi') || 'Belum dipilih';
-    const msg = `Halo Pyramid Oasis! 🏊‍♂️\n\nSaya ingin mendaftar:\n👤 Nama: ${nama}\n🎂 Umur: ${umur} tahun\n📚 Program: ${program}\n⏰ Sesi: ${sesi}\n📱 WA: ${wa}\n\nMohon info selanjutnya. Terima kasih!`;
-    window.open('https://wa.me/6285285550650?text=' + encodeURIComponent(msg), '_blank');
+    _waMsg = `Halo Pyramid Oasis! 🏊‍♂️\n\nSaya ingin mendaftar:\n👤 Nama: ${nama}\n🎂 Umur: ${umur} tahun\n📚 Program: ${program}\n⏰ Sesi: ${sesi}\n📱 WA: ${wa}\n\nMohon info selanjutnya. Terima kasih!`;
+    bukaModalWA();
+  }
+
+  function bukaModalWA() {
+    const overlay = document.getElementById('waModalOverlay');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Tutup modal jika klik di luar
+    overlay.addEventListener('click', function onOutside(ev) {
+      if (ev.target === overlay) {
+        tutupModalWA();
+        overlay.removeEventListener('click', onOutside);
+      }
+    });
+  }
+
+  function tutupModalWA() {
+    const overlay = document.getElementById('waModalOverlay');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function kirimKeWA(nomor) {
+    tutupModalWA();
+    window.open('https://wa.me/' + nomor + '?text=' + encodeURIComponent(_waMsg), '_blank');
   }
 
   // LOGIKA RATINGS INTERAKTIF PADA FORM FEEDBACK
