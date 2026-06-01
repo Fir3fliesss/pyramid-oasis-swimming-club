@@ -2099,7 +2099,7 @@
     <div class="wa-modal-title" id="waModalTitle">Kirim ke Admin mana?</div>
     <div class="wa-modal-desc">Pilih salah satu admin kami untuk menerima pendaftaran kamu.</div>
     <div class="wa-modal-options">
-      <button class="wa-option-btn" id="waBtnIndra" onclick="kirimKeWA('6285285550650')">
+      <button class="wa-option-btn" id="waBtnIndra" onclick="kirimKeWA('6285285550650', 'Kak Indra')">
         <div class="wa-option-avatar">BI</div>
         <div class="wa-option-info">
           <div class="wa-option-name">Admin Bang Indra</div>
@@ -2107,7 +2107,7 @@
         </div>
         <span class="wa-option-arrow">→</span>
       </button>
-      <button class="wa-option-btn" id="waBtnSambas" onclick="kirimKeWA('6289635863397')">
+      <button class="wa-option-btn" id="waBtnSambas" onclick="kirimKeWA('6289635863397', 'Kak Sambas')">
         <div class="wa-option-avatar">KS</div>
         <div class="wa-option-info">
           <div class="wa-option-name">Kak Sambas</div>
@@ -2260,7 +2260,7 @@
   });
 
   // FORM → WHATSAPP (dengan modal pilih nomor)
-  let _waMsg = '';
+  let _waData = {};
 
   function kirimWA(e) {
     e.preventDefault();
@@ -2270,7 +2270,7 @@
     const program = fd.get('program');
     const wa = fd.get('whatsapp');
     const sesi = fd.get('sesi') || 'Belum dipilih';
-    _waMsg = `Halo Pyramid Oasis! 🏊‍♂️\n\nSaya ingin mendaftar:\n👤 Nama: ${nama}\n🎂 Umur: ${umur} tahun\n📚 Program: ${program}\n⏰ Sesi: ${sesi}\n📱 WA: ${wa}\n\nMohon info selanjutnya. Terima kasih!`;
+    _waData = { nama, umur, program, wa, sesi };
     bukaModalWA();
   }
 
@@ -2293,9 +2293,11 @@
     document.body.style.overflow = '';
   }
 
-  function kirimKeWA(nomor) {
+  function kirimKeWA(nomor, sapaan) {
+    const { nama, umur, program, wa, sesi } = _waData;
+    const msg = `Halo ${sapaan}! 🏊‍♂️\n\nSaya ingin mendaftar:\n👤 Nama: ${nama}\n🎂 Umur: ${umur} tahun\n📚 Program: ${program}\n⏰ Sesi: ${sesi}\n📱 WA: ${wa}\n\nMohon info selanjutnya. Terima kasih!`;
     tutupModalWA();
-    window.open('https://wa.me/' + nomor + '?text=' + encodeURIComponent(_waMsg), '_blank');
+    window.open('https://wa.me/' + nomor + '?text=' + encodeURIComponent(msg), '_blank');
   }
 
   // LOGIKA RATINGS INTERAKTIF PADA FORM FEEDBACK
