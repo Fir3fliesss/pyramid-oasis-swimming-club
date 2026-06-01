@@ -1255,6 +1255,20 @@
       color: rgba(255,255,255,0.65);
     }
 
+    /* Timestamp pada testimoni */
+    .testi-time {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.28);
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .testi-time::before {
+      content: '🕐';
+      font-size: 0.7rem;
+    }
+
 
     /* ── CONTACT ── */
     .contact-section {
@@ -2390,6 +2404,29 @@
     localStorage.setItem(LOCAL_KEY, JSON.stringify(feedbacks));
   }
 
+  // Format tanggal Indonesia lengkap: Senin, 1 Juni 2026 · 08:36
+  function formatWaktuIndonesia(isoString) {
+    if (!isoString) return '';
+    const d = new Date(isoString);
+    if (isNaN(d)) return '';
+    const hari = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'][d.getDay()];
+    const bulan = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'][d.getMonth()];
+    const tgl = d.getDate();
+    const thn = d.getFullYear();
+    const jam = String(d.getHours()).padStart(2, '0');
+    const menit = String(d.getMinutes()).padStart(2, '0');
+    return `${hari}, ${tgl} ${bulan} ${thn} · ${jam}:${menit}`;
+  }
+
+  // Filter ulasan lebih dari 30 hari — hapus dari array
+  function filterOld30Hari(feedbacks) {
+    const batasWaktu = Date.now() - 30 * 24 * 60 * 60 * 1000; // 30 hari dalam ms
+    return feedbacks.filter(item => {
+      if (!item.tanggal) return true; // jaga-jaga data lama tanpa tanggal
+      return new Date(item.tanggal).getTime() >= batasWaktu;
+    });
+  }
+
   // Render ulasan ke dalam DOM (tanpa loading spinner)
   function renderCards(allFeedback) {
     testiList.innerHTML = '';
@@ -2407,6 +2444,7 @@
       const starsStr = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
       const card = document.createElement('div');
       card.className = 'testi-card';
+      const waktuStr = formatWaktuIndonesia(item.tanggal);
       card.innerHTML = `
         <div class="testi-stars">${starsStr}</div>
         <p class="testi-text">"${item.pesan}"</p>
@@ -2417,6 +2455,7 @@
             <div class="testi-role">${item.peran}</div>
           </div>
         </div>
+        ${waktuStr ? `<div class="testi-time">${waktuStr}</div>` : ''}
       `;
       testiList.appendChild(card);
     });
@@ -2429,7 +2468,9 @@
         <span style="display:inline-block; font-size: 1rem; opacity: 0.8;">⏳ Memuat ulasan...</span>
       </div>
     `;
-    const allFeedback = await getCloudTestimoni();
+    let allFeedback = await getCloudTestimoni();
+    // Terapkan filter 30 hari saat load
+    allFeedback = filterOld30Hari(allFeedback);
     saveToLocalCache(allFeedback);
     renderCards(allFeedback);
   }
@@ -2446,7 +2487,7 @@
     }
   }
 
-  // TAMBAH FEEDBACK BARU — AUTO-SAVE KE DATABASE CLOUD
+  // TAMBAH FEEDBACK BARU — AUTO-SAVE KE DATABASE CLOUD + AUTO-DELETE 30 HARI
   async function tambahFeedback(e) {
     e.preventDefault();
     const form = e.target;
@@ -2502,10 +2543,13 @@
         currentFeedback = localCache ? JSON.parse(localCache) : [...fallbackTestimoni];
       }
 
-      // 2. Sisipkan data baru di awal array
+      // 2. Hapus ulasan yang lebih dari 30 hari sebelum menambah baru
+      currentFeedback = filterOld30Hari(currentFeedback);
+
+      // 3. Sisipkan data baru di awal array
       currentFeedback.unshift(newFeedback);
 
-      // 3. Simpan data yang diperbarui ke database cloud (kvdb pakai POST dengan value sebagai string)
+      // 4. Simpan data yang diperbarui ke database cloud (kvdb pakai POST dengan value sebagai string)
       const putResponse = await fetch(DATABASE_WRITE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain' },
@@ -2514,7 +2558,7 @@
 
       if (!putResponse.ok) throw new Error('Gagal memperbarui database cloud');
 
-      // 4. Update local cache
+      // 5. Update local cache
       saveToLocalCache(currentFeedback);
 
     } catch (err) {
