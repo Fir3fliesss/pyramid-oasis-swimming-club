@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Pelatih — Pyramid Oasis Swimming Club</title>
+  <meta name="description" content="Kenali pelatih profesional berlisensi nasional di Pyramid Oasis Swimming Club — instruktur berpengalaman untuk semua level renang.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #061b33; --deep: #0a2545; --ocean: #0d5fa3;
+      --wave: #1a9aef; --aqua: #00c8e0; --gold: #f0b429;
+      --white: #ffffff; --muted: #5a7a90;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px; transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(6,27,51,0.96); backdrop-filter: blur(20px);
+      padding: 14px 48px; border-bottom: 1px solid rgba(26,154,239,0.15);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem;
+      letter-spacing: 2px; color: var(--white);
+      display: flex; align-items: center; gap: 10px; text-decoration: none;
+    }
+    .nav-logo span { color: var(--aqua); }
+    .nav-logo .wave-icon {
+      width: 38px; height: 38px; border-radius: 50%; overflow: hidden;
+      border: 2px solid var(--aqua); box-shadow: 0 0 10px rgba(0,200,224,0.4); flex-shrink: 0;
+    }
+    .nav-logo .wave-icon img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--aqua); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--wave), var(--aqua));
+      color: var(--navy) !important; padding: 10px 22px; border-radius: 100px;
+      font-weight: 700 !important; font-size: 0.85rem !important;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,200,224,0.4); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s ease; }
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0; right: 0;
+      background: var(--navy); padding: 80px 32px 40px; z-index: 99;
+      flex-direction: column; border-bottom: 2px solid rgba(26,154,239,0.2);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.3rem; font-weight: 500; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.07); transition: color 0.2s, padding-left 0.2s; }
+    .mobile-menu a:hover { color: var(--aqua); padding-left: 8px; }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      min-height: 50vh; display: flex; align-items: flex-end; padding-top: 80px;
+      position: relative; overflow: hidden; background: var(--navy);
+    }
+    .page-hero-bg {
+      position: absolute; inset: -20px;
+      background: url('foto_profil.jpeg') center/cover no-repeat;
+      opacity: 0.2; filter: blur(3px);
+    }
+    .page-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(6,27,51,0.3) 0%, rgba(6,27,51,0.95) 100%);
+    }
+    /* Animated water ripples di hero */
+    .hero-ripples {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 160px; overflow: hidden;
+    }
+    .ripple {
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      border-radius: 50%; border: 2px solid rgba(0,200,224,0.12);
+      animation: rippleOut 4s ease-out infinite;
+    }
+    .ripple:nth-child(1) { width: 300px; height: 150px; animation-delay: 0s; }
+    .ripple:nth-child(2) { width: 600px; height: 300px; animation-delay: 1.3s; }
+    .ripple:nth-child(3) { width: 900px; height: 450px; animation-delay: 2.6s; }
+    @keyframes rippleOut {
+      from { opacity: 0.5; transform: translateX(-50%) scaleX(0.3); }
+      to   { opacity: 0;   transform: translateX(-50%) scaleX(1); }
+    }
+    .page-hero-content { position: relative; z-index: 2; padding: 0 48px 60px; width: 100%; }
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+    .breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--aqua); }
+    .breadcrumb span { color: var(--aqua); }
+    .page-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 7vw, 6rem); letter-spacing: 4px; line-height: 0.9; }
+    .page-hero h1 em { font-style: normal; color: var(--aqua); }
+    .page-hero-sub { font-size: 1rem; color: rgba(255,255,255,0.55); font-weight: 300; margin-top: 12px; max-width: 540px; line-height: 1.6; }
+
+    /* ── CONTENT WRAPPER ── */
+    .page-content { max-width: 1100px; margin: 0 auto; padding: 80px 48px 100px; }
+
+    /* ── SECTION LABELS ── */
+    .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--aqua); margin-bottom: 12px; display: block; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--white); margin-bottom: 16px; line-height: 1.1; }
+    .section-desc { color: rgba(255,255,255,0.5); font-size: 1rem; line-height: 1.7; max-width: 500px; margin-bottom: 56px; }
+
+    /* ── COACH GRID ── */
+    .coach-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    /* ── COACH CARD ── */
+    .coach-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 28px;
+      padding: 48px 40px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+    .coach-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--wave), var(--aqua));
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .coach-card:hover {
+      background: rgba(26,154,239,0.06);
+      border-color: rgba(0,200,224,0.28);
+      transform: translateY(-10px);
+      box-shadow: 0 28px 60px rgba(0,200,224,0.12);
+    }
+    .coach-card:hover::before { opacity: 1; }
+
+    /* ── AVATAR ── */
+    .coach-avatar-wrapper {
+      position: relative;
+      width: 130px; height: 130px;
+      margin: 0 auto 28px;
+    }
+    .coach-avatar-ring {
+      position: absolute; inset: -6px;
+      border-radius: 50%;
+      border: 2px solid rgba(0,200,224,0.2);
+      animation: ringPulse 3s ease infinite;
+    }
+    @keyframes ringPulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50%       { opacity: 0.7; transform: scale(1.04); }
+    }
+    .coach-avatar-css {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--deep), var(--navy));
+      border: 3px solid rgba(0,200,224,0.35);
+      box-shadow: 0 0 24px rgba(0,200,224,0.18);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem; color: var(--aqua); letter-spacing: 1px;
+      transition: all 0.4s ease;
+      position: relative; overflow: hidden;
+    }
+    .coach-avatar-css::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle, rgba(0,200,224,0.12) 0%, transparent 70%);
+    }
+    .coach-card:hover .coach-avatar-css {
+      border-color: var(--aqua);
+      box-shadow: 0 0 36px rgba(0,200,224,0.5);
+      transform: scale(1.06);
+    }
+
+    /* ── CARD CONTENT ── */
+    .coach-badge {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--aqua);
+      background: rgba(0,200,224,0.1);
+      border: 1px solid rgba(0,200,224,0.25);
+      padding: 6px 16px; border-radius: 100px;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      margin-bottom: 18px;
+    }
+    .coach-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem; color: var(--white); margin-bottom: 14px;
+    }
+    .coach-bio {
+      font-size: 0.95rem; line-height: 1.7;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 28px;
+    }
+
+    /* ── KEAHLIAN TAGS ── */
+    .coach-skills {
+      display: flex; gap: 8px;
+      justify-content: center; flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .coach-tag {
+      font-size: 0.74rem; font-weight: 500;
+      color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 6px 14px; border-radius: 100px;
+      transition: all 0.3s ease;
+    }
+    .coach-card:hover .coach-tag {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    /* ── STATISTIK ── */
+    .coach-stats {
+      display: flex; justify-content: center; gap: 40px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 28px;
+    }
+    .stat-item { display: flex; flex-direction: column; align-items: center; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; color: var(--aqua);
+      line-height: 1; letter-spacing: 1px;
+    }
+    .stat-txt {
+      font-size: 0.7rem; color: rgba(255,255,255,0.4);
+      text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px;
+    }
+
+    /* ── DETAIL KEAHLIAN PANEL ── */
+    .coach-specialties {
+      display: flex; flex-direction: column; gap: 12px;
+      margin-bottom: 32px; text-align: left;
+    }
+    .specialty-item {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.88rem; color: rgba(255,255,255,0.65);
+    }
+    .specialty-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--aqua); flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(0,200,224,0.5);
+    }
+
+    /* ── CTA BOX ── */
+    .cta-box {
+      background: linear-gradient(135deg, rgba(13,95,163,0.25), rgba(0,200,224,0.08));
+      border: 1px solid rgba(0,200,224,0.18); border-radius: 24px;
+      padding: 56px 48px; text-align: center; margin-top: 72px;
+    }
+    .cta-box h2 { font-family: 'DM Serif Display', serif; font-size: 2.2rem; margin-bottom: 14px; }
+    .cta-box p { color: rgba(255,255,255,0.5); margin-bottom: 32px; font-size: 1rem; line-height: 1.6; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--wave), var(--aqua)); color: var(--navy);
+      padding: 16px 40px; border-radius: 100px; font-weight: 700; font-size: 0.95rem;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,200,224,0.35); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #040f1e; padding: 32px 48px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 2px; color: rgba(255,255,255,0.4); }
+    .footer-logo span { color: var(--aqua); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--aqua); }
+
+    /* ── REVEAL ANIMATION ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      nav { padding: 18px 28px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .page-content { padding: 56px 28px 72px; }
+      .page-hero-content { padding: 0 28px 50px; }
+      .coach-grid { grid-template-columns: 1fr; gap: 24px; }
+    }
+    @media (max-width: 640px) {
+      .page-content { padding: 40px 20px 56px; }
+      .page-hero-content { padding: 0 20px 40px; }
+      .coach-card { padding: 32px 24px; }
+      .cta-box { padding: 40px 24px; }
+      footer { flex-direction: column; text-align: center; padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="wave-icon"><img src="foto_profil.jpeg" alt="Pyramid Oasis"></div>
+    PYRAMID<span>OASIS</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Beranda</a></li>
+    <li><a href="prestasi.html">Prestasi</a></li>
+    <li><a href="galeri.html">Galeri</a></li>
+    <li><a href="pelatih.html" class="active">Pelatih</a></li>
+    <li><a href="index.html#daftar" class="nav-cta">Daftar Sekarang</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMobile()">Beranda</a>
+  <a href="prestasi.html" onclick="closeMobile()">Prestasi</a>
+  <a href="galeri.html" onclick="closeMobile()">Galeri</a>
+  <a href="pelatih.html" onclick="closeMobile()">Pelatih</a>
+  <a href="index.html#daftar" onclick="closeMobile()" style="color:var(--aqua);font-weight:700;margin-top:8px;">✦ Daftar Sekarang</a>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="hero-ripples">
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+  </div>
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="index.html">Beranda</a> › <span>Daftar Pelatih</span>
+    </div>
+    <h1>DAFTAR<br><em>PELATIH</em></h1>
+    <p class="page-hero-sub">Kenali instruktur berpengalaman kami yang siap membimbing Anda dari pemula hingga menjadi atlet berprestasi.</p>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="page-content">
+
+  <div style="text-align:center; margin-bottom: 64px;">
+    <span class="section-label reveal">Instruktur Kami</span>
+    <h2 class="section-title reveal">Tim Pelatih<br>Profesional</h2>
+    <p class="section-desc reveal" style="margin: 0 auto 0;">Berlatih langsung dengan pelatih berlisensi nasional dan berpengalaman untuk mendapatkan hasil yang optimal.</p>
+  </div>
+
+  <!-- GRID KARTU PELATIH -->
+  <div class="coach-grid">
+
+    <!-- ─── PELATIH 1: BANG INDRA ─── -->
+    <div class="coach-card reveal">
+      <div class="coach-avatar-wrapper">
+        <div class="coach-avatar-ring"></div>
+        <div class="coach-avatar-css">BI</div>
+      </div>
+      <div class="coach-badge">Pelatih Utama &amp; Admin</div>
+      <h3 class="coach-name">Bang Indra</h3>
+      <p class="coach-bio">
+        Spesialis pelatihan dasar renang (pemula) untuk anak-anak hingga dewasa.
+        Dikenal dengan pendekatan yang ramah, sabar, dan suportif sehingga
+        murid cepat percaya diri di dalam air.
+      </p>
+      <div class="coach-specialties">
+        <div class="specialty-item"><div class="specialty-dot"></div>Pelatihan renang pemula &amp; adaptasi air</div>
+        <div class="specialty-item"><div class="specialty-dot"></div>Teknik dasar empat gaya renang</div>
+        <div class="specialty-item"><div class="specialty-dot"></div>Keselamatan kolam &amp; terapi air</div>
+        <div class="specialty-item"><div class="specialty-dot"></div>Koordinasi administrasi &amp; pendaftaran anggota</div>
+      </div>
+      <div class="coach-skills">
+        <span class="coach-tag">🏅 Lisensi Nasional</span>
+        <span class="coach-tag">🌊 Renang Pemula</span>
+        <span class="coach-tag">💧 Terapi Air</span>
+      </div>
+      <div class="coach-stats">
+        <div class="stat-item">
+          <span class="stat-num">7+</span>
+          <span class="stat-txt">Thn Pengalaman</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">200+</span>
+          <span class="stat-txt">Siswa Lulus</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">100%</span>
+          <span class="stat-txt">Berlisensi</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── PELATIH 2: KAK SAMBAS ─── -->
+    <div class="coach-card reveal">
+      <div class="coach-avatar-wrapper">
+        <div class="coach-avatar-ring"></div>
+        <div class="coach-avatar-css">KS</div>
+      </div>
+      <div class="coach-badge">Pelatih Senior</div>
+      <h3 class="coach-name">Kak Sambas</h3>
+      <p class="coach-bio">
+        Mantan atlet renang kompetisi tingkat regional dengan rekam jejak gemilang.
+        Kini mendedikasikan diri membina atlet muda Pyramid Oasis menuju podium
+        kejuaraan dengan metode latihan terstruktur dan terukur.
+      </p>
+      <div class="coach-specialties">
+        <div class="specialty-item"><div class="specialty-dot"></div>Analisis teknik gaya renang (stroke analysis)</div>
+        <div class="specialty-item"><div class="specialty-dot"></div>Pelatihan stamina &amp; kecepatan kompetitif</div>
+        <div class="specialty-item"><div class="specialty-dot"></div>Persiapan mental &amp; strategi balapan</div>
+        <div class="specialty-item"><div class="specialty-dot"></div>Pembinaan atlet muda usia 10–18 tahun</div>
+      </div>
+      <div class="coach-skills">
+        <span class="coach-tag">🏆 Eks-Atlet Regional</span>
+        <span class="coach-tag">⚡ Stroke Analysis</span>
+        <span class="coach-tag">🥇 Pembinaan Atlet</span>
+      </div>
+      <div class="coach-stats">
+        <div class="stat-item">
+          <span class="stat-num">5+</span>
+          <span class="stat-txt">Thn Pengalaman</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">50+</span>
+          <span class="stat-txt">Medali Atlet</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">3x</span>
+          <span class="stat-txt">Juara Regional</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- END GRID -->
+
+  <!-- CTA BOX -->
+  <div class="cta-box reveal">
+    <h2>Siap Berlatih Bersama Kami?</h2>
+    <p>Daftarkan diri Anda sekarang dan mulailah perjalanan renang bersama pelatih terbaik Pyramid Oasis.</p>
+    <a href="index.html#daftar" class="btn-primary">Daftar Sekarang →</a>
+  </div>
+
+</div>
+<!-- END PAGE-CONTENT -->
+
+<footer>
+  <div class="footer-logo">PYRAMID<span>OASIS</span></div>
+  <div class="footer-links">
+    <a href="index.html">Beranda</a>
+    <a href="prestasi.html">Prestasi</a>
+    <a href="galeri.html">Galeri</a>
+    <a href="pelatih.html">Pelatih</a>
+    <a href="index.html#daftar">Daftar</a>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+
+  // Reveal animation on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
