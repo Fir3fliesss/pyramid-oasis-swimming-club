@@ -253,6 +253,73 @@
       box-shadow: 0 0 8px rgba(0,200,224,0.5);
     }
 
+    /* ── PROFILE PHOTO ── */
+    .profile-photo-wrapper {
+      position: relative;
+      width: 150px; height: 150px;
+      margin: 0 auto 24px;
+    }
+    .profile-photo-ring {
+      position: absolute; inset: -7px;
+      border-radius: 50%;
+      border: 2px solid rgba(0,200,224,0.25);
+      animation: ringPulse 3s ease infinite;
+    }
+    .profile-photo {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 3px solid rgba(0,200,224,0.45);
+      box-shadow: 0 0 28px rgba(0,200,224,0.25);
+      transition: all 0.4s ease;
+      display: block;
+    }
+    .coach-card:hover .profile-photo {
+      border-color: var(--aqua);
+      box-shadow: 0 0 40px rgba(0,200,224,0.5);
+      transform: scale(1.04);
+    }
+
+    /* ── BIODATA TABLE ── */
+    .biodata-table {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 28px;
+      text-align: left;
+    }
+    .biodata-row {
+      display: grid;
+      grid-template-columns: 42% 58%;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.2s;
+    }
+    .biodata-row:last-child { border-bottom: none; }
+    .biodata-row:hover { background: rgba(0,200,224,0.04); }
+    .biodata-label {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--aqua);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 11px 14px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(0,200,224,0.03);
+    }
+    .biodata-value {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.8);
+      padding: 11px 14px;
+      display: flex;
+      align-items: center;
+      word-break: break-word;
+    }
+
     /* ── CTA BOX ── */
     .cta-box {
       background: linear-gradient(135deg, rgba(13,95,163,0.25), rgba(0,200,224,0.08));
@@ -362,43 +429,62 @@
   <!-- GRID KARTU PELATIH -->
   <div class="coach-grid">
 
-    <!-- ─── PELATIH 1: BANG INDRA ─── -->
+    <!-- ─── PELATIH 1: NIZAM MULKIL AKBAR ─── -->
     <div class="coach-card reveal">
-      <div class="coach-avatar-wrapper">
-        <div class="coach-avatar-ring"></div>
-        <div class="coach-avatar-css">BI</div>
+      <!-- FOTO DI TENGAH -->
+      <div class="profile-photo-wrapper">
+        <div class="profile-photo-ring"></div>
+        <img src="foto_indra.jpg" alt="Nizam Mulkil Akbar" class="profile-photo">
       </div>
+
       <div class="coach-badge">Pelatih Utama &amp; Admin</div>
-      <h3 class="coach-name">Bang Indra</h3>
-      <p class="coach-bio">
-        Spesialis pelatihan dasar renang (pemula) untuk anak-anak hingga dewasa.
-        Dikenal dengan pendekatan yang ramah, sabar, dan suportif sehingga
-        murid cepat percaya diri di dalam air.
-      </p>
-      <div class="coach-specialties">
-        <div class="specialty-item"><div class="specialty-dot"></div>Pelatihan renang pemula &amp; adaptasi air</div>
-        <div class="specialty-item"><div class="specialty-dot"></div>Teknik dasar empat gaya renang</div>
-        <div class="specialty-item"><div class="specialty-dot"></div>Keselamatan kolam &amp; terapi air</div>
-        <div class="specialty-item"><div class="specialty-dot"></div>Koordinasi administrasi &amp; pendaftaran anggota</div>
+      <h3 class="coach-name">Nizam Mulkil Akbar</h3>
+
+      <!-- BIODATA LENGKAP -->
+      <div class="biodata-table">
+        <div class="biodata-row">
+          <span class="biodata-label">👤 Nama</span>
+          <span class="biodata-value">Nizam Mulkil Akbar</span>
+        </div>
+        <div class="biodata-row">
+          <span class="biodata-label">🎂 TTL</span>
+          <span class="biodata-value">Depok, 17 Maret 2001</span>
+        </div>
+        <div class="biodata-row">
+          <span class="biodata-label">⚧ Jenis Kelamin</span>
+          <span class="biodata-value">Laki-laki</span>
+        </div>
+        <div class="biodata-row">
+          <span class="biodata-label">📞 No. Telepon</span>
+          <span class="biodata-value">089712121</span>
+        </div>
+        <div class="biodata-row">
+          <span class="biodata-label">✉️ Email</span>
+          <span class="biodata-value">nizam.ganteng@gmail.com</span>
+        </div>
+        <div class="biodata-row">
+          <span class="biodata-label">🏅 Sertifikat</span>
+          <span class="biodata-value">Pernah mengikuti pelatihan di Pyramid</span>
+        </div>
+        <div class="biodata-row">
+          <span class="biodata-label">💼 Pengalaman</span>
+          <span class="biodata-value">1 Tahun</span>
+        </div>
+        <div class="biodata-row">
+          <span class="biodata-label">🏊 Keahlian Gaya</span>
+          <span class="biodata-value">Sangat Ahli (4 Gaya)</span>
+        </div>
+        <div class="biodata-row">
+          <span class="biodata-label">🌐 Bahasa</span>
+          <span class="biodata-value">German, English</span>
+        </div>
       </div>
+
+      <!-- TAG KEAHLIAN -->
       <div class="coach-skills">
-        <span class="coach-tag">🏅 Lisensi Nasional</span>
-        <span class="coach-tag">🌊 Renang Pemula</span>
-        <span class="coach-tag">💧 Terapi Air</span>
-      </div>
-      <div class="coach-stats">
-        <div class="stat-item">
-          <span class="stat-num">7+</span>
-          <span class="stat-txt">Thn Pengalaman</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num">200+</span>
-          <span class="stat-txt">Siswa Lulus</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num">100%</span>
-          <span class="stat-txt">Berlisensi</span>
-        </div>
+        <span class="coach-tag">🏊 4 Gaya Renang</span>
+        <span class="coach-tag">🌐 German &amp; English</span>
+        <span class="coach-tag">🏅 Bersertifikat</span>
       </div>
     </div>
 
