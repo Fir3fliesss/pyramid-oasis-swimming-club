@@ -1855,8 +1855,7 @@
     }
 
     .elevyn-avatar-front,
-    .elevyn-avatar-back,
-    .elevyn-avatar-back-initial {
+    .elevyn-avatar-back {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -1865,14 +1864,44 @@
     }
 
     .elevyn-avatar-front {
-      background: radial-gradient(circle, #0e1b30 0%, #030814 100%);
       border: 2px solid rgba(255, 179, 0, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
       box-shadow: 0 0 15px rgba(255, 179, 0, 0.15), inset 0 0 15px rgba(255, 179, 0, 0.1);
       transition: border-color 0.3s, box-shadow 0.3s;
       overflow: visible;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .elevyn-avatar-front-overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(14, 27, 48, 0.1) 0%, rgba(3, 8, 20, 0.5) 100%);
+      pointer-events: none;
+    }
+
+    .elevyn-avatar-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 36px;
+      height: 36px;
+      background: radial-gradient(circle, #0e1b30 0%, #030814 100%);
+      border: 1.5px solid #ffb300;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px rgba(255, 179, 0, 0.5);
+      z-index: 10;
+      padding: 5px;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s, box-shadow 0.4s;
+    }
+
+    .elevyn-team-card:hover .elevyn-avatar-badge {
+      transform: scale(1.15) rotate(15deg);
+      border-color: #ba68c8;
+      box-shadow: 0 0 15px rgba(186, 104, 200, 0.6);
     }
 
     .elevyn-team-card:hover .elevyn-avatar-front {
@@ -1903,9 +1932,9 @@
     }
 
     .mini-crystal {
-      width: 60%;
-      height: 60%;
-      filter: drop-shadow(0 0 5px rgba(255, 179, 0, 0.4));
+      width: 55%;
+      height: 55%;
+      filter: drop-shadow(0 0 6px rgba(255, 179, 0, 0.5));
       transition: transform 0.5s;
     }
 
@@ -1919,12 +1948,16 @@
       border: 2px solid #ffb300;
       box-shadow: 0 0 20px rgba(255, 179, 0, 0.5);
       position: relative;
+      background: radial-gradient(circle, #0e1b30 0%, #030814 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .elevyn-avatar-back-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(3, 9, 20, 0.8) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(186, 104, 200, 0.1) 0%, rgba(3, 8, 20, 0.4) 100%);
       border-radius: 50%;
     }
 
@@ -2556,7 +2589,7 @@
 </section>
 
 <!-- TEAM ELEVYN -->
-<svg style="display: none;">
+<svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
   <defs>
     <linearGradient id="crystalGold1" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FFE082" />
@@ -2628,16 +2661,22 @@
     <div class="elevyn-team-card">
       <div class="elevyn-avatar-container">
         <div class="elevyn-avatar-card">
-          <div class="elevyn-avatar-front">
+          <div class="elevyn-avatar-front" style="background-image: url('foto_ghoits.jpg');">
+            <div class="elevyn-avatar-front-overlay"></div>
             <div class="elevyn-avatar-glow"></div>
-            <div class="mini-crystal">
+            <div class="elevyn-avatar-badge">
               <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
                 <use href="#main-crystal-crown" />
               </svg>
             </div>
           </div>
-          <div class="elevyn-avatar-back" style="background-image: url('foto_ghoits.jpg'); background-size: cover; background-position: center;">
+          <div class="elevyn-avatar-back">
             <div class="elevyn-avatar-back-overlay"></div>
+            <div class="mini-crystal">
+              <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
+                <use href="#main-crystal-crown" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -2665,16 +2704,22 @@
     <div class="elevyn-team-card">
       <div class="elevyn-avatar-container">
         <div class="elevyn-avatar-card">
-          <div class="elevyn-avatar-front">
+          <div class="elevyn-avatar-front" style="background-image: url('foto_kanaya.jpg');">
+            <div class="elevyn-avatar-front-overlay"></div>
             <div class="elevyn-avatar-glow"></div>
-            <div class="mini-crystal">
+            <div class="elevyn-avatar-badge">
               <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
                 <use href="#main-crystal-crown" />
               </svg>
             </div>
           </div>
-          <div class="elevyn-avatar-back-initial">
-            <div>KD</div>
+          <div class="elevyn-avatar-back">
+            <div class="elevyn-avatar-back-overlay"></div>
+            <div class="mini-crystal">
+              <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
+                <use href="#main-crystal-crown" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -2702,16 +2747,22 @@
     <div class="elevyn-team-card">
       <div class="elevyn-avatar-container">
         <div class="elevyn-avatar-card">
-          <div class="elevyn-avatar-front">
+          <div class="elevyn-avatar-front" style="background-image: url('foto_nizam.jpg');">
+            <div class="elevyn-avatar-front-overlay"></div>
             <div class="elevyn-avatar-glow"></div>
-            <div class="mini-crystal">
+            <div class="elevyn-avatar-badge">
               <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
                 <use href="#main-crystal-crown" />
               </svg>
             </div>
           </div>
-          <div class="elevyn-avatar-back-initial">
-            <div>NA</div>
+          <div class="elevyn-avatar-back">
+            <div class="elevyn-avatar-back-overlay"></div>
+            <div class="mini-crystal">
+              <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
+                <use href="#main-crystal-crown" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -2739,16 +2790,22 @@
     <div class="elevyn-team-card">
       <div class="elevyn-avatar-container">
         <div class="elevyn-avatar-card">
-          <div class="elevyn-avatar-front">
+          <div class="elevyn-avatar-front" style="background-image: url('foto_zalfa.jpg');">
+            <div class="elevyn-avatar-front-overlay"></div>
             <div class="elevyn-avatar-glow"></div>
-            <div class="mini-crystal">
+            <div class="elevyn-avatar-badge">
               <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
                 <use href="#main-crystal-crown" />
               </svg>
             </div>
           </div>
-          <div class="elevyn-avatar-back-initial">
-            <div>ZF</div>
+          <div class="elevyn-avatar-back">
+            <div class="elevyn-avatar-back-overlay"></div>
+            <div class="mini-crystal">
+              <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
+                <use href="#main-crystal-crown" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
