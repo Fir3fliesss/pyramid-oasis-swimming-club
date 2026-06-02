@@ -1749,14 +1749,15 @@
 
     .elevyn-emblem-container {
       position: relative;
-      width: 120px;
-      height: 120px;
+      width: 180px;
+      height: 104px;
       margin: 0 auto 20px;
     }
 
     .elevyn-main-emblem {
       width: 100%;
       height: 100%;
+      object-fit: contain;
       filter: drop-shadow(0 0 15px rgba(255, 179, 0, 0.45));
       transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.6s ease;
       cursor: pointer;
@@ -1855,7 +1856,8 @@
     }
 
     .elevyn-avatar-front,
-    .elevyn-avatar-back {
+    .elevyn-avatar-back,
+    .elevyn-avatar-back-initial {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -1952,6 +1954,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    .elevyn-avatar-back-initial {
+      transform: rotateY(180deg);
+      border: 2px solid #ba68c8;
+      box-shadow: 0 0 20px rgba(186, 104, 200, 0.5);
+      background: radial-gradient(circle, #250a30 0%, #030814 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffe17d;
+      font-weight: 700;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(255, 225, 125, 0.6);
     }
 
     .elevyn-avatar-back-overlay {
@@ -2643,9 +2660,7 @@
   
   <div class="elevyn-header reveal">
     <div class="elevyn-emblem-container">
-      <svg class="elevyn-main-emblem" viewBox="0 0 200 200">
-        <use href="#main-crystal-crown" />
-      </svg>
+      <img src="elevyn_logo.png" class="elevyn-main-emblem" alt="ELEVYN Logo">
     </div>
     <h2 class="elevyn-title">ELEVYN</h2>
     <div class="elevyn-subtitle-container">
@@ -2661,22 +2676,11 @@
     <div class="elevyn-team-card">
       <div class="elevyn-avatar-container">
         <div class="elevyn-avatar-card">
-          <div class="elevyn-avatar-front" style="background-image: url('foto_ghoits.jpg');">
-            <div class="elevyn-avatar-front-overlay"></div>
+          <div class="elevyn-avatar-front" style="background-image: url('elevyn_avatar.png');">
             <div class="elevyn-avatar-glow"></div>
-            <div class="elevyn-avatar-badge">
-              <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
-                <use href="#main-crystal-crown" />
-              </svg>
-            </div>
           </div>
-          <div class="elevyn-avatar-back">
+          <div class="elevyn-avatar-back" style="background-image: url('foto_ghoits.jpg'); background-size: cover; background-position: center;">
             <div class="elevyn-avatar-back-overlay"></div>
-            <div class="mini-crystal">
-              <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
-                <use href="#main-crystal-crown" />
-              </svg>
-            </div>
           </div>
         </div>
       </div>
@@ -2704,22 +2708,11 @@
     <div class="elevyn-team-card">
       <div class="elevyn-avatar-container">
         <div class="elevyn-avatar-card">
-          <div class="elevyn-avatar-front" style="background-image: url('foto_kanaya.jpg');">
-            <div class="elevyn-avatar-front-overlay"></div>
+          <div class="elevyn-avatar-front" style="background-image: url('elevyn_avatar.png');">
             <div class="elevyn-avatar-glow"></div>
-            <div class="elevyn-avatar-badge">
-              <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
-                <use href="#main-crystal-crown" />
-              </svg>
-            </div>
           </div>
-          <div class="elevyn-avatar-back">
-            <div class="elevyn-avatar-back-overlay"></div>
-            <div class="mini-crystal">
-              <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
-                <use href="#main-crystal-crown" />
-              </svg>
-            </div>
+          <div class="elevyn-avatar-back-initial">
+            <div>KD</div>
           </div>
         </div>
       </div>
@@ -2747,22 +2740,11 @@
     <div class="elevyn-team-card">
       <div class="elevyn-avatar-container">
         <div class="elevyn-avatar-card">
-          <div class="elevyn-avatar-front" style="background-image: url('foto_nizam.jpg');">
-            <div class="elevyn-avatar-front-overlay"></div>
+          <div class="elevyn-avatar-front" style="background-image: url('elevyn_avatar.png');">
             <div class="elevyn-avatar-glow"></div>
-            <div class="elevyn-avatar-badge">
-              <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
-                <use href="#main-crystal-crown" />
-              </svg>
-            </div>
           </div>
-          <div class="elevyn-avatar-back">
-            <div class="elevyn-avatar-back-overlay"></div>
-            <div class="mini-crystal">
-              <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
-                <use href="#main-crystal-crown" />
-              </svg>
-            </div>
+          <div class="elevyn-avatar-back-initial">
+            <div>NA</div>
           </div>
         </div>
       </div>
@@ -2790,22 +2772,11 @@
     <div class="elevyn-team-card">
       <div class="elevyn-avatar-container">
         <div class="elevyn-avatar-card">
-          <div class="elevyn-avatar-front" style="background-image: url('foto_zalfa.jpg');">
-            <div class="elevyn-avatar-front-overlay"></div>
+          <div class="elevyn-avatar-front" style="background-image: url('elevyn_avatar.png');">
             <div class="elevyn-avatar-glow"></div>
-            <div class="elevyn-avatar-badge">
-              <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
-                <use href="#main-crystal-crown" />
-              </svg>
-            </div>
           </div>
-          <div class="elevyn-avatar-back">
-            <div class="elevyn-avatar-back-overlay"></div>
-            <div class="mini-crystal">
-              <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
-                <use href="#main-crystal-crown" />
-              </svg>
-            </div>
+          <div class="elevyn-avatar-back-initial">
+            <div>ZF</div>
           </div>
         </div>
       </div>
