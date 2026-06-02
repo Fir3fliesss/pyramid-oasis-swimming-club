@@ -1082,6 +1082,11 @@
 ${d.catatan ? '📝 *Catatan:* ' + d.catatan + '\n' : ''}
 Mohon konfirmasi pendaftaran. Terima kasih! 🙏`;
 
+    // Increment active athletes count in localStorage
+    let count = parseInt(localStorage.getItem('activeAthletes') || '91', 10);
+    count += 1;
+    localStorage.setItem('activeAthletes', count);
+
     window.open('https://wa.me/6285285550650?text=' + encodeURIComponent(pesan), '_blank');
     showToast('✅ WhatsApp sudah terbuka!');
   }

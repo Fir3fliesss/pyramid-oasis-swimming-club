@@ -2120,7 +2120,7 @@
     </div>
     <div class="hero-stats">
       <div>
-        <div class="hero-stat-num">100+</div>
+        <div class="hero-stat-num" id="activeAthletesCount">91</div>
         <div class="hero-stat-label">Atlet Aktif</div>
       </div>
       <div>
@@ -2175,7 +2175,7 @@
     </div>
     <div class="features-right reveal">
       <div class="stat-box">
-        <span class="stat-num" data-target="100">0</span>
+        <span class="stat-num" id="totalParticipantsCount" data-target="91">0</span>
         <div class="stat-label">Peserta Telah Bergabung</div>
       </div>
       <div class="stat-box">
@@ -2726,6 +2726,24 @@
     initSplash();
   }
 
+  // ACTIVE ATHLETES REAL-TIME COUNT
+  function initActiveAthletes() {
+    let count = localStorage.getItem('activeAthletes');
+    if (!count) {
+      count = 91;
+      localStorage.setItem('activeAthletes', count);
+    }
+    const countEl = document.getElementById('activeAthletesCount');
+    if (countEl) {
+      countEl.textContent = count;
+    }
+    const participantsEl = document.getElementById('totalParticipantsCount');
+    if (participantsEl) {
+      participantsEl.setAttribute('data-target', count);
+    }
+  }
+  initActiveAthletes();
+
   // NAVBAR SCROLL
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
@@ -2847,6 +2865,17 @@
     const { nama, umur, program, wa, sesi } = _waData;
     const msg = `Halo ${sapaan}! 🏊‍♂️\n\nSaya ingin mendaftar:\n👤 Nama: ${nama}\n🎂 Umur: ${umur} tahun\n📚 Program: ${program}\n⏰ Sesi: ${sesi}\n📱 WA: ${wa}\n\nMohon info selanjutnya. Terima kasih!`;
     tutupModalWA();
+    
+    // Increment active athletes count
+    let count = parseInt(localStorage.getItem('activeAthletes') || '91', 10);
+    count += 1;
+    localStorage.setItem('activeAthletes', count);
+    
+    const countEl = document.getElementById('activeAthletesCount');
+    if (countEl) {
+      countEl.textContent = count;
+    }
+    
     window.open('https://wa.me/' + nomor + '?text=' + encodeURIComponent(msg), '_blank');
   }
 
