@@ -1587,7 +1587,18 @@
         font-size: 0.95rem;
         margin-bottom: 28px;
       }
-      .hero-stats { gap: 24px; flex-wrap: wrap; }
+      .hero-stats {
+        gap: 16px;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+      }
+      .hero-stat-num {
+        font-size: clamp(1.8rem, 5vw, 2.2rem);
+      }
+      .hero-stat-label {
+        font-size: 0.68rem;
+        white-space: nowrap;
+      }
       section { padding: 56px 20px; }
       .coach-card { padding: 28px 20px; }
       .programs-header { flex-direction: column; align-items: flex-start; gap: 20px; }
