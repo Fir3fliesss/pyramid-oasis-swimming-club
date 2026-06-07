@@ -1720,6 +1720,30 @@
       box-shadow: 0 12px 30px rgba(0,200,224,0.45);
     }
 
+    .splash-ripple {
+      position: absolute;
+      border: 2px solid rgba(0, 200, 224, 0.45);
+      border-radius: 50%;
+      pointer-events: none;
+      width: 40px;
+      height: 40px;
+      z-index: 2;
+      transform: translate(-50%, -50%) scale(0);
+      animation: rippleEffect 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    }
+    @keyframes rippleEffect {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.8;
+        box-shadow: 0 0 8px rgba(0, 200, 224, 0.3);
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(var(--ripple-scale, 6));
+        opacity: 0;
+        box-shadow: 0 0 20px rgba(0, 200, 224, 0);
+      }
+    }
+
     /* Website content zoom-out transition style */
     .web-content-wrapper {
       opacity: 0;
@@ -2757,7 +2781,8 @@
     
     document.body.style.overflow = 'hidden';
     
-    // 1. Create and setup dynamic canvas background for bubbles and ripples
+    // 1. Create and setup dynamic canvas background for rising bubbles (rendered at 50% res for performance)
+    const dpr = 0.5;
     const canvas = document.createElement('canvas');
     canvas.id = 'splashCanvas';
     canvas.style.position = 'absolute';
@@ -2770,43 +2795,52 @@
     splash.appendChild(canvas);
 
     const ctx = canvas.getContext('2d');
-    let width = (canvas.width = splash.offsetWidth);
-    let height = (canvas.height = splash.offsetHeight);
+    let width = (canvas.width = splash.offsetWidth * dpr);
+    let height = (canvas.height = splash.offsetHeight * dpr);
 
     window.addEventListener('resize', () => {
       if (!splash.classList.contains('zoom-out')) {
-        width = canvas.width = splash.offsetWidth;
-        height = canvas.height = splash.offsetHeight;
+        width = canvas.width = splash.offsetWidth * dpr;
+        height = canvas.height = splash.offsetHeight * dpr;
       }
     });
 
     const bubbles = [];
-    const ripples = [];
 
-    // Spawn bubbles
-    for (let i = 0; i < 40; i++) {
+    // Spawn bubbles optimized for half-resolution space
+    for (let i = 0; i < 30; i++) {
       bubbles.push({
         x: Math.random() * width,
         y: Math.random() * height + height,
-        r: Math.random() * 5 + 1.5,
-        speed: Math.random() * 1.2 + 0.4,
+        r: (Math.random() * 4 + 1.2) * dpr,
+        speed: (Math.random() * 1.0 + 0.3) * dpr,
         wobble: Math.random() * 2,
         wobbleSpeed: Math.random() * 0.02,
-        opacity: Math.random() * 0.25 + 0.08
+        opacity: Math.random() * 0.22 + 0.06
       });
     }
 
-    // Capture click location for ripple effect
+    // Capture click location for smooth, GPU-accelerated CSS ripple effect
     splash.addEventListener('click', (e) => {
       const rect = splash.getBoundingClientRect();
-      ripples.push({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-        r: 0,
-        maxR: Math.random() * 60 + 60,
-        opacity: 0.5,
-        speed: 2.5
-      });
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const ripple = document.createElement('div');
+      ripple.className = 'splash-ripple';
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+
+      // Randomize ripple scale slightly for natural look
+      const scale = Math.random() * 2 + 5; // 5 to 7 scale factor
+      ripple.style.setProperty('--ripple-scale', scale);
+
+      splash.appendChild(ripple);
+
+      // Clean up ripple element after animation completes (800ms)
+      setTimeout(() => {
+        ripple.remove();
+      }, 800);
     });
 
     let animationFrameId;
@@ -2817,26 +2851,10 @@
       }
       ctx.clearRect(0, 0, width, height);
 
-      // Draw interactive ripples
-      for (let i = ripples.length - 1; i >= 0; i--) {
-        const r = ripples[i];
-        r.r += r.speed;
-        r.opacity -= 0.012;
-        if (r.opacity <= 0) {
-          ripples.splice(i, 1);
-          continue;
-        }
-        ctx.beginPath();
-        ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(0, 200, 224, ${r.opacity})`;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-      }
-
       // Draw and move rising bubbles
       bubbles.forEach((b) => {
         b.y -= b.speed;
-        b.x += Math.sin(b.wobble) * 0.3;
+        b.x += Math.sin(b.wobble) * 0.15;
         b.wobble += b.wobbleSpeed;
 
         // Reset bubble when it reaches top
@@ -2846,14 +2864,14 @@
         }
 
         // Push bubble away from cursor spotlight gently
-        const mx = parseFloat(splash.style.getPropertyValue('--mouse-x')) || width / 2;
-        const my = parseFloat(splash.style.getPropertyValue('--mouse-y')) || height / 2;
+        const mx = (parseFloat(splash.style.getPropertyValue('--mouse-x')) || splash.offsetWidth / 2) * dpr;
+        const my = (parseFloat(splash.style.getPropertyValue('--mouse-y')) || splash.offsetHeight / 2) * dpr;
         const dx = b.x - mx;
         const dy = b.y - my;
         const dist = Math.hypot(dx, dy);
-        if (dist < 130) {
-          const force = (130 - dist) / 130;
-          b.x += (dx / dist) * force * 1.8;
+        if (dist < 80) {
+          const force = (80 - dist) / 80;
+          b.x += (dx / dist) * force * 1.0;
         }
 
         // Draw bubble body
