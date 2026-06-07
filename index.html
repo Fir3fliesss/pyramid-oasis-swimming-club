@@ -34,7 +34,7 @@
 
     /* ── NAVBAR ── */
     nav {
-      poition: fixed;
+      position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
       display: flex;
@@ -395,6 +395,10 @@
     /* ── SECTIONS ── */
     section {
       padding: 100px 48px;
+      scroll-margin-top: 80px;
+    }
+    #beranda {
+      scroll-margin-top: 0;
     }
 
     .section-label {
@@ -1527,7 +1531,18 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
       section { padding: 70px 28px; }
-      .hero-content { padding: 0 28px 70px; }
+      .hero {
+        align-items: stretch;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+      .hero-content {
+        margin-top: auto;
+        padding: 95px 28px 70px !important; /* safe spacing under fixed navbar */
+      }
+      .hero h1 {
+        font-size: 3.5rem;
+      }
       .features-inner, .register-inner, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
       .features-right { grid-template-columns: repeat(4, 1fr); }
       .features-right .stat-box:first-child { grid-column: auto; }
@@ -1541,7 +1556,18 @@
 
     @media (max-width: 640px) {
       nav { padding: 16px 20px; }
-      .hero-content { padding: 0 20px 60px; }
+      .hero-content {
+        padding: 95px 20px 60px !important; /* safe spacing under fixed navbar on mobile */
+      }
+      .hero h1 {
+        font-size: 2.6rem !important; /* scale down font size to prevent layout height overflow */
+        line-height: 1.05;
+        letter-spacing: 1.5px;
+      }
+      .hero-desc {
+        font-size: 0.95rem;
+        margin-bottom: 28px;
+      }
       .hero-stats { gap: 24px; flex-wrap: wrap; }
       section { padding: 56px 20px; }
       .coach-card { padding: 28px 20px; }
