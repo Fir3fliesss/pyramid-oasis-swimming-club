@@ -1629,11 +1629,12 @@
     }
     .splash-title {
       font-family: 'DM Serif Display', serif;
-      font-size: 2rem;
+      font-size: 2.2rem;
       color: var(--white);
       cursor: default;
       overflow: hidden;
       display: inline-block;
+      position: relative;
       transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
     }
     .splash-title .char {
@@ -1657,24 +1658,47 @@
       color: var(--aqua);
       font-weight: 300;
       animation: cursorBlink 0.8s ease infinite;
-      margin-left: 2px;
+      margin-left: 4px;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.2s ease;
     }
     .splash-title.typing::after {
       opacity: 1;
     }
     .splash-title.done::after {
-      opacity: 0;
+      content: '';
+      display: none !important;
+      opacity: 0 !important;
     }
     @keyframes cursorBlink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
+    @keyframes textShimmer {
+      0%, 75%, 100% {
+        color: var(--white);
+        text-shadow: none;
+        transform: translateY(0);
+      }
+      37% {
+        color: var(--aqua);
+        text-shadow: 0 0 12px rgba(0, 200, 224, 0.8);
+        transform: translateY(-4px);
+      }
+    }
+    .splash-title.done .char {
+      animation: textShimmer 4s ease-in-out infinite;
+      animation-delay: calc(var(--char-index) * 0.08s);
+      transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+    }
     .splash-title:hover {
-      transform: scale(1.03);
-      color: var(--aqua);
-      text-shadow: 0 0 10px rgba(0,200,224,0.3);
+      transform: scale(1.05);
+    }
+    .splash-title:hover .char {
+      animation-play-state: paused;
+      color: var(--aqua) !important;
+      text-shadow: 0 0 12px rgba(0, 200, 224, 0.8) !important;
+      transform: translateY(-2px) !important;
     }
     .splash-btn {
       background: linear-gradient(135deg, var(--wave), var(--aqua));
@@ -2733,7 +2757,123 @@
     
     document.body.style.overflow = 'hidden';
     
-    // Split splash-title into characters for premium reveal animation
+    // 1. Create and setup dynamic canvas background for bubbles and ripples
+    const canvas = document.createElement('canvas');
+    canvas.id = 'splashCanvas';
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.pointerEvents = 'none'; // let clicks pass through to splash screen
+    canvas.style.zIndex = '1';
+    splash.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    let width = (canvas.width = splash.offsetWidth);
+    let height = (canvas.height = splash.offsetHeight);
+
+    window.addEventListener('resize', () => {
+      if (!splash.classList.contains('zoom-out')) {
+        width = canvas.width = splash.offsetWidth;
+        height = canvas.height = splash.offsetHeight;
+      }
+    });
+
+    const bubbles = [];
+    const ripples = [];
+
+    // Spawn bubbles
+    for (let i = 0; i < 40; i++) {
+      bubbles.push({
+        x: Math.random() * width,
+        y: Math.random() * height + height,
+        r: Math.random() * 5 + 1.5,
+        speed: Math.random() * 1.2 + 0.4,
+        wobble: Math.random() * 2,
+        wobbleSpeed: Math.random() * 0.02,
+        opacity: Math.random() * 0.25 + 0.08
+      });
+    }
+
+    // Capture click location for ripple effect
+    splash.addEventListener('click', (e) => {
+      const rect = splash.getBoundingClientRect();
+      ripples.push({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+        r: 0,
+        maxR: Math.random() * 60 + 60,
+        opacity: 0.5,
+        speed: 2.5
+      });
+    });
+
+    let animationFrameId;
+    const animate = () => {
+      if (splash.classList.contains('zoom-out')) {
+        cancelAnimationFrame(animationFrameId);
+        return;
+      }
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw interactive ripples
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const r = ripples[i];
+        r.r += r.speed;
+        r.opacity -= 0.012;
+        if (r.opacity <= 0) {
+          ripples.splice(i, 1);
+          continue;
+        }
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(0, 200, 224, ${r.opacity})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+
+      // Draw and move rising bubbles
+      bubbles.forEach((b) => {
+        b.y -= b.speed;
+        b.x += Math.sin(b.wobble) * 0.3;
+        b.wobble += b.wobbleSpeed;
+
+        // Reset bubble when it reaches top
+        if (b.y < -10) {
+          b.y = height + 10;
+          b.x = Math.random() * width;
+        }
+
+        // Push bubble away from cursor spotlight gently
+        const mx = parseFloat(splash.style.getPropertyValue('--mouse-x')) || width / 2;
+        const my = parseFloat(splash.style.getPropertyValue('--mouse-y')) || height / 2;
+        const dx = b.x - mx;
+        const dy = b.y - my;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 130) {
+          const force = (130 - dist) / 130;
+          b.x += (dx / dist) * force * 1.8;
+        }
+
+        // Draw bubble body
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 200, 224, ${b.opacity})`;
+        ctx.fill();
+
+        // 3D glass highlight reflection
+        ctx.beginPath();
+        ctx.arc(b.x - b.r * 0.35, b.y - b.r * 0.35, b.r * 0.2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${b.opacity * 1.8})`;
+        ctx.fill();
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    animate();
+
+    // 2. Split splash-title into characters for premium reveal animation
     const splashTitle = splash.querySelector('.splash-title');
     let charCount = 0;
     if (splashTitle) {
@@ -2745,6 +2885,7 @@
       [...text].forEach((char, index) => {
         const span = document.createElement('span');
         span.classList.add('char');
+        span.style.setProperty('--char-index', index);
         if (char === ' ') {
           span.classList.add('space');
           span.innerHTML = '&nbsp;';
@@ -2764,11 +2905,11 @@
         const chars = splashTitle.querySelectorAll('.char');
         chars.forEach(char => char.classList.add('visible'));
         
-        // After typing animation completes, remove blinking cursor
+        // Remove typing class (cursor) safely after ALL characters have finished animation
         setTimeout(() => {
           splashTitle.classList.remove('typing');
           splashTitle.classList.add('done');
-        }, (charCount * 40) + 600);
+        }, (charCount * 40) + 950);
       }
     }, 50);
     
