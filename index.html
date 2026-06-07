@@ -1552,28 +1552,6 @@
       .testi-wrapper { grid-template-columns: 1fr; gap: 40px; }
       .testi-list { grid-template-columns: 1fr; }
       footer { flex-direction: column; text-align: center; padding: 32px 28px; }
-
-      /* Mobile splash screen adjustments */
-      .splash-content {
-        gap: 24px;
-        padding: 0 20px;
-        box-sizing: border-box;
-        width: 100%;
-      }
-      .splash-logo {
-        font-size: clamp(2rem, 6.5vw, 2.5rem);
-      }
-      .splash-logo .wave-icon {
-        width: clamp(40px, 11vw, 50px);
-        height: clamp(40px, 11vw, 50px);
-      }
-      .splash-title {
-        font-size: clamp(0.9rem, 4.6vw, 1.8rem);
-      }
-      .splash-btn {
-        padding: 16px 40px;
-        font-size: 1rem;
-      }
     }
 
     @media (max-width: 640px) {
@@ -2215,6 +2193,30 @@
         width: 130px;
         height: 130px;
         margin-bottom: 24px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      /* Mobile splash screen adjustments placed at the end to prevent global style override */
+      .splash-content {
+        gap: 24px;
+        padding: 0 20px;
+        box-sizing: border-box;
+        width: 100%;
+      }
+      .splash-logo {
+        font-size: clamp(2rem, 6.5vw, 2.5rem);
+      }
+      .splash-logo .wave-icon {
+        width: clamp(40px, 11vw, 50px);
+        height: clamp(40px, 11vw, 50px);
+      }
+      .splash-title {
+        font-size: clamp(0.9rem, 4.6vw, 1.8rem);
+      }
+      .splash-btn {
+        padding: 16px 40px;
+        font-size: 1rem;
       }
     }
   </style>
