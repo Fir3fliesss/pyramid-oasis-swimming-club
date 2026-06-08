@@ -2275,7 +2275,7 @@
         <div class="hero-stat-label">Level Program</div>
       </div>
       <div>
-        <div class="hero-stat-num">5★</div>
+        <div class="hero-stat-num" id="parentRating">5★</div>
         <div class="hero-stat-label">Rating Orang Tua</div>
       </div>
     </div>
@@ -3324,9 +3324,25 @@
     });
   }
 
+  // Hitung & update rating orang tua di hero secara real-time
+  function updateParentRating(allFeedback) {
+    const parentRatingEl = document.getElementById('parentRating');
+    if (!parentRatingEl) return;
+    if (!allFeedback || allFeedback.length === 0) {
+      parentRatingEl.textContent = '5★';
+      return;
+    }
+    const totalRating = allFeedback.reduce((sum, item) => sum + (item.rating || 5), 0);
+    const avgRating = totalRating / allFeedback.length;
+    // Tampilkan desimal (misal 4.8★) atau angka bulat (misal 5★)
+    const formattedRating = avgRating % 1 === 0 ? `${avgRating}★` : `${avgRating.toFixed(1)}★`;
+    parentRatingEl.textContent = formattedRating;
+  }
+
   // Render ulasan ke dalam DOM (tanpa loading spinner)
   function renderCards(allFeedback) {
     testiList.innerHTML = '';
+    updateParentRating(allFeedback);
     if (!allFeedback || allFeedback.length === 0) {
       testiList.innerHTML = `
         <div class="testi-empty">
