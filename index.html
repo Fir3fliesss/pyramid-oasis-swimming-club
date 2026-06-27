@@ -23,13 +23,18 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
+    }
 
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--navy);
       color: var(--white);
       overflow-x: hidden;
+      width: 100%;
     }
 
     /* ── NAVBAR ── */
@@ -61,7 +66,19 @@
       gap: 10px;
     }
 
-    .nav-logo span {
+    .nav-logo-text {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+    .logo-brand {
+      color: var(--white);
+    }
+    .logo-hyphen {
+      letter-spacing: 0;
+      color: var(--white);
+    }
+    .logo-region {
       color: var(--aqua);
     }
 
@@ -1546,21 +1563,61 @@
       .testi-wrapper { grid-template-columns: 1fr; gap: 40px; }
       .testi-list { grid-template-columns: 1fr; }
       footer { flex-direction: column; text-align: center; padding: 32px 28px; }
+      .footer-logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 1.1;
+      }
+      .footer-logo .logo-hyphen {
+        display: none;
+      }
       /* Logo responsif di tablet */
-      .nav-logo { font-size: 1.1rem; letter-spacing: 1px; gap: 7px; }
-      .nav-logo .wave-icon { width: 30px; height: 30px; }
+      .nav-logo { gap: 8px; }
+      .nav-logo .wave-icon { width: 32px; height: 32px; }
+      .nav-logo-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 0.95;
+        white-space: normal;
+      }
+      .logo-hyphen {
+        display: none;
+      }
+      .logo-brand {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+      }
+      .logo-region {
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        margin-top: 1px;
+      }
     }
 
     @media (max-width: 480px) {
-      /* Logo lebih kecil di HP kecil */
-      .nav-logo { font-size: clamp(0.65rem, 3.2vw, 0.95rem); letter-spacing: 0.5px; gap: 5px; }
-      .nav-logo .wave-icon { width: 26px; height: 26px; }
+      /* Logo di HP kecil */
+      .nav-logo { gap: 6px; }
+      .nav-logo .wave-icon { width: 30px; height: 30px; }
+      .logo-brand {
+        font-size: 1.15rem;
+      }
+      .logo-region {
+        font-size: 0.75rem;
+      }
     }
 
     @media (max-width: 360px) {
-      /* Logo paling kecil di layar sempit */
-      .nav-logo { font-size: 0.6rem; letter-spacing: 0.3px; gap: 4px; }
-      .nav-logo .wave-icon { width: 22px; height: 22px; }
+      /* Logo di HP paling kecil */
+      .nav-logo { gap: 5px; }
+      .nav-logo .wave-icon { width: 26px; height: 26px; }
+      .logo-brand {
+        font-size: 1.05rem;
+      }
+      .logo-region {
+        font-size: 0.7rem;
+      }
     }
 
     @media (max-width: 640px) {
@@ -2239,7 +2296,7 @@
 
 <!-- NAVBAR -->
 <nav id="navbar">
-  <div class="nav-logo"><div class="wave-icon"><img src="foto_profil.jpeg" alt="Aqua Spartan"></div><span style="white-space:nowrap;">AQUA SPARTAN<span style="letter-spacing:0;">-</span><span style="color:var(--aqua);">KABUPATEN BOGOR</span></span></div>
+  <div class="nav-logo"><div class="wave-icon"><img src="foto_profil.jpeg" alt="Aqua Spartan"></div><div class="nav-logo-text"><span class="logo-brand">AQUA SPARTAN</span><span class="logo-hyphen">-</span><span class="logo-region">KABUPATEN BOGOR</span></div></div>
   <ul class="nav-links">
     <li><a href="#beranda">Beranda</a></li>
     <li><a href="prestasi.html">Prestasi</a></li>
@@ -2788,7 +2845,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo"><span style="white-space:nowrap;">AQUA SPARTAN<span style="letter-spacing:0;">-</span><span style="color:var(--aqua);">KABUPATEN BOGOR</span></span></div>
+  <div class="footer-logo"><span class="logo-brand" style="color: rgba(255,255,255,0.5);">AQUA SPARTAN</span><span class="logo-hyphen" style="letter-spacing: 0; color: rgba(255,255,255,0.5);">-</span><span class="logo-region">KABUPATEN BOGOR</span></div>
   <div class="footer-copy">© 2026 Aqua Spartan-Kabupaten Bogor · Semua hak dilindungi</div>
   <div class="footer-links">
     <a href="#beranda">Beranda</a>
