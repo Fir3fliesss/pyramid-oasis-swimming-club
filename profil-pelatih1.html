@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Pelatih — Pyramid Oasis Swimming Club</title>
+  <meta name="description" content="Profil lengkap pelatih renang tingkat dasar di Pyramid Oasis Swimming Club.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #061b33; --deep: #0a2545; --ocean: #0d5fa3;
+      --wave: #1a9aef; --aqua: #00c8e0; --gold: #f0b429;
+      --white: #ffffff; --muted: #5a7a90;
+      --tc: #1a9aef;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; transition: all 0.4s ease; }
+    nav.scrolled { background: rgba(6,27,51,0.96); backdrop-filter: blur(20px); padding: 14px 48px; border-bottom: 1px solid rgba(26,154,239,0.15); }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px; color: var(--white); display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo span { color: var(--aqua); }
+    .nav-logo .wave-icon { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; border: 2px solid var(--aqua); box-shadow: 0 0 10px rgba(0,200,224,0.4); flex-shrink: 0; }
+    .nav-logo .wave-icon img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--aqua); }
+    .nav-cta { background: linear-gradient(135deg, var(--wave), var(--aqua)); color: var(--navy) !important; padding: 10px 22px; border-radius: 100px; font-weight: 700 !important; font-size: 0.85rem !important; transition: transform 0.2s, box-shadow 0.2s !important; }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,200,224,0.4); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s ease; }
+    .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; background: var(--navy); padding: 80px 32px 40px; z-index: 99; flex-direction: column; border-bottom: 2px solid rgba(26,154,239,0.2); }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.3rem; font-weight: 500; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.07); transition: color 0.2s, padding-left 0.2s; }
+    .mobile-menu a:hover { color: var(--aqua); padding-left: 8px; }
+
+    /* ── PROFILE HERO ── */
+    .profile-hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: 80px;
+      position: relative; overflow: hidden;
+      background: var(--navy);
+    }
+    .profile-hero-bg {
+      position: absolute; inset: -20px;
+      background: url('foto_profil.jpeg') center/cover no-repeat;
+      opacity: 0.1; filter: blur(6px);
+    }
+    .profile-hero-overlay {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(26,154,239,0.06) 0%, transparent 60%),
+                  linear-gradient(to right, rgba(6,27,51,0.98) 45%, rgba(6,27,51,0.7) 100%);
+    }
+    .hero-top-line { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--tc), transparent); }
+    .hero-ripples { position: absolute; top: 50%; right: -100px; transform: translateY(-50%); opacity: 0.15; }
+    .ripple-hero { border-radius: 50%; border: 1.5px solid var(--tc); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: rippleExpand 4s ease-out infinite; }
+    .ripple-hero:nth-child(1) { width: 300px; height: 300px; animation-delay: 0s; }
+    .ripple-hero:nth-child(2) { width: 500px; height: 500px; animation-delay: 1.3s; }
+    .ripple-hero:nth-child(3) { width: 700px; height: 700px; animation-delay: 2.6s; }
+    @keyframes rippleExpand { from { opacity: 0.5; transform: translate(-50%,-50%) scale(0.5); } to { opacity: 0; transform: translate(-50%,-50%) scale(1); } }
+
+    .profile-hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1100px; margin: 0 auto; padding: 60px 48px;
+      width: 100%;
+      display: grid; grid-template-columns: 320px 1fr; gap: 72px; align-items: center;
+    }
+
+    /* Left: Photo Column */
+    .profile-photo-col { display: flex; flex-direction: column; align-items: center; }
+    .profile-photo-frame {
+      position: relative;
+      width: 240px; height: 300px;
+      border-radius: 24px; overflow: hidden;
+      border: 2px solid rgba(26,154,239,0.35);
+      box-shadow: 0 0 60px rgba(26,154,239,0.2), 0 20px 60px rgba(0,0,0,0.5);
+      margin-bottom: 24px;
+      animation: floatPhoto 4s ease-in-out infinite;
+    }
+    @keyframes floatPhoto { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .profile-photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .profile-photo-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 5rem;
+      color: var(--tc); background: linear-gradient(135deg, var(--deep), rgba(26,154,239,0.08));
+    }
+    .profile-tier-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(26,154,239,0.12); border: 1px solid rgba(26,154,239,0.3);
+      padding: 8px 20px; border-radius: 100px;
+      font-size: 0.73rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--tc);
+    }
+
+    /* Right: Info Column */
+    .profile-info-col {}
+    .profile-breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: rgba(255,255,255,0.35); margin-bottom: 20px; flex-wrap: wrap; }
+    .profile-breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .profile-breadcrumb a:hover { color: var(--aqua); }
+    .profile-breadcrumb span { color: var(--tc); }
+
+    .profile-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      color: var(--white); line-height: 1.05;
+      margin-bottom: 10px; letter-spacing: -0.5px;
+    }
+    .profile-title {
+      font-size: 1rem; color: rgba(255,255,255,0.45);
+      margin-bottom: 28px; font-weight: 400;
+    }
+    .profile-bio {
+      font-size: 1rem; line-height: 1.75;
+      color: rgba(255,255,255,0.62);
+      margin-bottom: 32px; max-width: 520px;
+      border-left: 3px solid rgba(26,154,239,0.35);
+      padding-left: 20px;
+    }
+
+    /* Tags */
+    .profile-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+    .profile-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 500; color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 6px 14px; border-radius: 100px; transition: all 0.25s; }
+    .profile-tag:hover { background: rgba(26,154,239,0.1); border-color: rgba(26,154,239,0.3); color: var(--white); }
+
+    /* Quick stats */
+    .profile-stats {
+      display: flex; gap: 36px; flex-wrap: wrap;
+      padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 32px;
+    }
+    .stat { display: flex; flex-direction: column; }
+    .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--tc); line-height: 1; letter-spacing: 1px; }
+    .stat-lbl { font-size: 0.7rem; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+    /* Back button */
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 100px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.6); font-size: 0.85rem; font-weight: 500;
+      text-decoration: none; transition: all 0.25s;
+    }
+    .btn-back:hover { background: rgba(255,255,255,0.09); color: var(--white); border-color: rgba(255,255,255,0.2); }
+
+    /* ── BIODATA SECTION ── */
+    .biodata-section { max-width: 1100px; margin: 0 auto; padding: 80px 48px 100px; }
+    .biodata-section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem; color: var(--white);
+      margin-bottom: 32px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .biodata-section-title::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
+
+    .biodata-table {
+      width: 100%; border-radius: 20px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07); margin-bottom: 48px;
+    }
+    .biodata-row {
+      display: grid; grid-template-columns: 200px 1fr;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.2s;
+    }
+    .biodata-row:last-child { border-bottom: none; }
+    .biodata-row:hover { background: rgba(26,154,239,0.03); }
+    .biodata-label {
+      font-size: 0.73rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--tc);
+      padding: 14px 20px; border-right: 1px solid rgba(255,255,255,0.05);
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(26,154,239,0.03);
+    }
+    .biodata-value { font-size: 0.92rem; color: rgba(255,255,255,0.78); padding: 14px 20px; display: flex; align-items: center; }
+
+    /* ── CTA ── */
+    .cta-box { background: linear-gradient(135deg, rgba(13,95,163,0.2), rgba(26,154,239,0.06)); border: 1px solid rgba(26,154,239,0.15); border-radius: 24px; padding: 56px 48px; text-align: center; position: relative; overflow: hidden; }
+    .cta-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--tc), transparent); }
+    .cta-box h2 { font-family: 'DM Serif Display', serif; font-size: 2.2rem; margin-bottom: 14px; }
+    .cta-box p { color: rgba(255,255,255,0.45); margin-bottom: 32px; font-size: 1rem; line-height: 1.6; }
+    .btn-primary { background: linear-gradient(135deg, var(--wave), var(--aqua)); color: var(--navy); padding: 16px 40px; border-radius: 100px; font-weight: 700; font-size: 0.95rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.2s, box-shadow 0.2s; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,200,224,0.35); }
+
+    footer { background: #040f1e; padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 2px; color: rgba(255,255,255,0.4); }
+    .footer-logo span { color: var(--aqua); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--aqua); }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1024px) {
+      nav { padding: 18px 28px; } .nav-links { display: none; } .hamburger { display: flex; }
+      .profile-hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 60px 28px; text-align: center; }
+      .profile-photo-col { order: -1; }
+      .profile-bio { margin: 0 auto 32px; }
+      .profile-stats { justify-content: center; }
+      .profile-tags { justify-content: center; }
+      .profile-breadcrumb { justify-content: center; }
+      .biodata-section { padding: 56px 28px 72px; }
+    }
+    @media (max-width: 640px) {
+      .profile-hero-inner { padding: 40px 20px; }
+      .profile-name { font-size: 2rem; }
+      .biodata-row { grid-template-columns: 1fr; }
+      .biodata-label { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .biodata-section { padding: 40px 20px 56px; }
+      .cta-box { padding: 40px 24px; }
+      footer { flex-direction: column; text-align: center; padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><div class="wave-icon"><img src="foto_profil.jpeg" alt="Pyramid Oasis"></div>PYRAMID<span>OASIS</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Beranda</a></li>
+    <li><a href="prestasi.html">Prestasi</a></li>
+    <li><a href="galeri.html">Galeri</a></li>
+    <li><a href="pelatih.html" class="active">Pelatih</a></li>
+    <li><a href="index.html#daftar" class="nav-cta">Daftar Sekarang</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMobile()">Beranda</a>
+  <a href="prestasi.html" onclick="closeMobile()">Prestasi</a>
+  <a href="galeri.html" onclick="closeMobile()">Galeri</a>
+  <a href="pelatih.html" onclick="closeMobile()">Pelatih</a>
+  <a href="index.html#daftar" onclick="closeMobile()" style="color:var(--aqua);font-weight:700;margin-top:8px;">✦ Daftar Sekarang</a>
+</div>
+
+<!-- PROFILE HERO -->
+<div class="profile-hero">
+  <div class="profile-hero-bg"></div>
+  <div class="profile-hero-overlay"></div>
+  <div class="hero-top-line"></div>
+  <div class="hero-ripples">
+    <div class="ripple-hero"></div><div class="ripple-hero"></div><div class="ripple-hero"></div>
+  </div>
+  <div class="profile-hero-inner">
+
+    <!-- FOTO -->
+    <div class="profile-photo-col">
+      <div class="profile-photo-frame">
+        <!-- Ganti dengan: <img src="foto_pelatih.jpg" alt="Nama Pelatih"> -->
+        <div class="profile-photo-placeholder">P1</div>
+      </div>
+      <div class="profile-tier-badge">🌊 Pelatih Dasar</div>
+    </div>
+
+    <!-- INFO -->
+    <div class="profile-info-col">
+      <div class="profile-breadcrumb">
+        <a href="index.html">Beranda</a> ›
+        <a href="pelatih.html">Pelatih</a> ›
+        <a href="pelatih-dasar.html">Pelatih Dasar</a> ›
+        <span>Profil Lengkap</span>
+      </div>
+
+      <h1 class="profile-name">Nama Pelatih</h1>
+      <p class="profile-title">Jabatan / Spesialisasi · Pyramid Oasis Swimming Club</p>
+
+      <p class="profile-bio">
+        Deskripsi singkat pelatih di sini — ceritakan pengalaman, filosofi melatih, atau pencapaian yang membanggakan. Ini akan menjadi kesan pertama yang dilihat oleh calon siswa.
+      </p>
+
+      <div class="profile-tags">
+        <span class="profile-tag">🏊 Gaya Dada</span>
+        <span class="profile-tag">💧 Water Safety</span>
+        <span class="profile-tag">🎖 Lisensi C</span>
+        <span class="profile-tag">📍 Kota</span>
+      </div>
+
+      <div class="profile-stats">
+        <div class="stat"><span class="stat-num">—</span><span class="stat-lbl">Tahun Pengalaman</span></div>
+        <div class="stat"><span class="stat-num">—</span><span class="stat-lbl">Siswa Dibimbing</span></div>
+        <div class="stat"><span class="stat-num">—</span><span class="stat-lbl">Sertifikasi</span></div>
+      </div>
+
+      <a href="pelatih-dasar.html" class="btn-back">← Kembali ke Pelatih Dasar</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- BIODATA LENGKAP -->
+<div class="biodata-section">
+
+  <h2 class="biodata-section-title reveal">Biodata Lengkap</h2>
+
+  <div class="biodata-table reveal">
+    <div class="biodata-row">
+      <div class="biodata-label">👤 Nama Lengkap</div>
+      <div class="biodata-value">—</div>
+    </div>
+    <div class="biodata-row">
+      <div class="biodata-label">🎂 Tempat, Tgl Lahir</div>
+      <div class="biodata-value">—</div>
+    </div>
+    <div class="biodata-row">
+      <div class="biodata-label">🏫 Pendidikan</div>
+      <div class="biodata-value">—</div>
+    </div>
+    <div class="biodata-row">
+      <div class="biodata-label">📋 Lisensi</div>
+      <div class="biodata-value">—</div>
+    </div>
+    <div class="biodata-row">
+      <div class="biodata-label">📅 Bergabung</div>
+      <div class="biodata-value">—</div>
+    </div>
+    <div class="biodata-row">
+      <div class="biodata-label">🌐 Bahasa</div>
+      <div class="biodata-value">—</div>
+    </div>
+    <div class="biodata-row">
+      <div class="biodata-label">🏆 Prestasi</div>
+      <div class="biodata-value">—</div>
+    </div>
+    <div class="biodata-row">
+      <div class="biodata-label">📝 Catatan</div>
+      <div class="biodata-value">—</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box reveal">
+    <h2>Tertarik Berlatih?</h2>
+    <p>Daftarkan diri Anda sekarang dan mulailah perjalanan renang bersama pelatih terbaik Pyramid Oasis.</p>
+    <a href="index.html#daftar" class="btn-primary">Daftar Sekarang →</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">PYRAMID<span>OASIS</span></div>
+  <div class="footer-links">
+    <a href="index.html">Beranda</a><a href="prestasi.html">Prestasi</a>
+    <a href="galeri.html">Galeri</a><a href="pelatih.html">Pelatih</a><a href="index.html#daftar">Daftar</a>
+  </div>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 100); obs.unobserve(e.target); } });
+  }, { threshold: 0.06 });
+  reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
