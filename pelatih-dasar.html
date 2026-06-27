@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daftar Pelatih — Pyramid Oasis Swimming Club</title>
-  <meta name="description" content="Kenali pelatih profesional berlisensi nasional di Pyramid Oasis Swimming Club — instruktur berpengalaman untuk semua level renang.">
+  <title>Pelatih Dasar — Pyramid Oasis Swimming Club</title>
+  <meta name="description" content="Daftar pelatih renang tingkat dasar berlisensi nasional di Pyramid Oasis Swimming Club — membimbing pemula dari nol.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <style>
@@ -73,7 +73,6 @@
       position: absolute; inset: 0;
       background: linear-gradient(to bottom, rgba(6,27,51,0.3) 0%, rgba(6,27,51,0.95) 100%);
     }
-    /* Animated water ripples di hero */
     .hero-ripples {
       position: absolute; bottom: 0; left: 0; right: 0; height: 160px; overflow: hidden;
     }
@@ -158,10 +157,6 @@
       0%, 100% { opacity: 0.3; transform: scale(1); }
       50%       { opacity: 0.7; transform: scale(1.04); }
     }
-    @keyframes floatPulse {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
     .coach-avatar-css {
       width: 100%; height: 100%;
       border-radius: 50%;
@@ -240,316 +235,6 @@
     .stat-txt {
       font-size: 0.7rem; color: rgba(255,255,255,0.4);
       text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px;
-    }
-
-    /* ── DETAIL KEAHLIAN PANEL ── */
-    .coach-specialties {
-      display: flex; flex-direction: column; gap: 12px;
-      margin-bottom: 32px; text-align: left;
-    }
-    .specialty-item {
-      display: flex; align-items: center; gap: 12px;
-      font-size: 0.88rem; color: rgba(255,255,255,0.65);
-    }
-    .specialty-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--aqua); flex-shrink: 0;
-      box-shadow: 0 0 8px rgba(0,200,224,0.5);
-    }
-
-    /* ── PHOTO-ONLY FLIP CARD ── */
-    .photo-card {
-      position: relative;
-      cursor: pointer;
-      overflow: hidden;
-      border-radius: 28px;
-      background: #000;
-      border: 1px solid rgba(255,255,255,0.07);
-      transition: border-color 0.4s ease, box-shadow 0.4s ease;
-      min-height: 300px;
-      display: flex;
-      align-items: stretch;
-    }
-    /* ── PHOTO-LESS CARD FRONT ── */
-    .photo-card-front {
-      width: 100%;
-      padding: 48px 32px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: linear-gradient(135deg, rgba(6, 27, 51, 0.85), rgba(10, 37, 69, 0.95));
-      transition: transform 0.5s ease;
-      position: relative;
-      z-index: 1;
-    }
-    .photo-card-front .card-icon {
-      font-size: 3.5rem;
-      margin-bottom: 20px;
-      filter: drop-shadow(0 0 12px rgba(0, 200, 224, 0.5));
-      animation: floatPulse 3s ease-in-out infinite;
-    }
-    .photo-card-front .card-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.2rem;
-      letter-spacing: 2px;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-    .photo-card-front .card-subtitle {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--aqua);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 24px;
-      background: rgba(0, 200, 224, 0.1);
-      padding: 4px 14px;
-      border-radius: 100px;
-      border: 1px solid rgba(0, 200, 224, 0.25);
-    }
-    .photo-card-front .card-desc {
-      font-size: 0.9rem;
-      line-height: 1.65;
-      color: rgba(255, 255, 255, 0.65);
-      margin-bottom: 28px;
-    }
-    .photo-card-front .card-stats-preview {
-      display: flex;
-      gap: 24px;
-      width: 100%;
-      justify-content: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 20px;
-    }
-    .card-stat-mini {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .card-stat-mini-val {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      color: var(--aqua);
-      letter-spacing: 0.5px;
-    }
-    .card-stat-mini-lbl {
-      font-size: 0.65rem;
-      color: rgba(255, 255, 255, 0.45);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-top: 2px;
-    }
-    .photo-card.card-dasar {
-      background: radial-gradient(circle at top right, rgba(26, 154, 239, 0.15), transparent), rgba(6, 27, 51, 0.6);
-      border-color: rgba(26, 154, 239, 0.2);
-    }
-    .photo-card.card-dasar:hover {
-      border-color: var(--wave);
-      box-shadow: 0 20px 50px rgba(26, 154, 239, 0.25);
-    }
-    .photo-card.card-semi {
-      background: radial-gradient(circle at top right, rgba(0, 200, 224, 0.18), transparent), rgba(6, 27, 51, 0.6);
-      border-color: rgba(0, 200, 224, 0.25);
-    }
-    .photo-card.card-semi:hover {
-      border-color: var(--aqua);
-      box-shadow: 0 20px 50px rgba(0, 200, 224, 0.3);
-    }
-    .photo-card.card-pro {
-      background: radial-gradient(circle at top right, rgba(240, 180, 41, 0.15), transparent), rgba(6, 27, 51, 0.6);
-      border-color: rgba(240, 180, 41, 0.2);
-    }
-    .photo-card.card-pro:hover {
-      border-color: var(--gold);
-      box-shadow: 0 20px 50px rgba(240, 180, 41, 0.25);
-    }
-    .photo-card:hover {
-      border-color: rgba(0,200,224,0.35);
-      box-shadow: 0 20px 50px rgba(0,200,224,0.15);
-    }
-    .photo-card-img {
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-      display: block;
-      transition: transform 0.5s ease, filter 0.4s ease;
-    }
-    .photo-card:hover .photo-card-img {
-      transform: scale(1.02);
-    }
-    /* Hint icon di pojok bawah */
-    .photo-card-hint {
-      position: absolute;
-      bottom: 14px; right: 16px;
-      background: rgba(0,200,224,0.15);
-      border: 1px solid rgba(0,200,224,0.3);
-      border-radius: 100px;
-      padding: 6px 12px;
-      font-size: 0.72rem;
-      color: var(--aqua);
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      backdrop-filter: blur(8px);
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-    .photo-card.open .photo-card-hint { opacity: 0; }
-    /* Overlay biodata (slide up) */
-    .photo-card-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(6,27,51,0.98);
-      backdrop-filter: blur(20px);
-      transform: translateY(101%);
-      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-      overflow-y: auto;
-      padding: 28px 24px 24px;
-      display: flex;
-      flex-direction: column;
-      z-index: 5;
-    }
-    .photo-card.open .photo-card-overlay {
-      transform: translateY(0);
-    }
-    /* Close button */
-    .overlay-close {
-      position: absolute;
-      top: 14px; right: 16px;
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.7);
-      font-size: 1rem;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s;
-      flex-shrink: 0;
-    }
-    .overlay-close:hover { background: rgba(255,255,255,0.15); color: var(--white); }
-    /* Overlay header */
-    .overlay-header {
-      margin-bottom: 18px;
-      padding-right: 40px;
-    }
-    .overlay-badge {
-      display: inline-block;
-      font-size: 0.68rem; font-weight: 700;
-      color: var(--aqua);
-      background: rgba(0,200,224,0.1);
-      border: 1px solid rgba(0,200,224,0.25);
-      padding: 4px 12px; border-radius: 100px;
-      text-transform: uppercase; letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-    .overlay-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.5rem; color: var(--white);
-      line-height: 1.1;
-    }
-    /* Biodata rows di overlay */
-    .overlay-biodata { flex: 1; }
-    /* Staggered animation per row */
-    .photo-card.open .biodata-row {
-      opacity: 0;
-      animation: biodataIn 0.4s ease forwards;
-    }
-    .photo-card.open .biodata-row:nth-child(1)  { animation-delay: 0.08s; }
-    .photo-card.open .biodata-row:nth-child(2)  { animation-delay: 0.16s; }
-    .photo-card.open .biodata-row:nth-child(3)  { animation-delay: 0.24s; }
-    .photo-card.open .biodata-row:nth-child(4)  { animation-delay: 0.32s; }
-    .photo-card.open .biodata-row:nth-child(5)  { animation-delay: 0.40s; }
-    .photo-card.open .biodata-row:nth-child(6)  { animation-delay: 0.48s; }
-    .photo-card.open .biodata-row:nth-child(7)  { animation-delay: 0.56s; }
-    .photo-card.open .biodata-row:nth-child(8)  { animation-delay: 0.64s; }
-    .photo-card.open .biodata-row:nth-child(9)  { animation-delay: 0.72s; }
-    @keyframes biodataIn {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    /* Tags di overlay */
-    .overlay-tags {
-      display: flex; gap: 6px; flex-wrap: wrap;
-      margin-top: 16px;
-    }
-    .overlay-tag {
-      font-size: 0.7rem; font-weight: 500;
-      color: rgba(255,255,255,0.75);
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 4px 10px; border-radius: 100px;
-    }
-
-    /* ── PROFILE PHOTO ── */
-    .profile-photo-wrapper {
-      position: relative;
-      width: 200px;
-      height: 260px;
-      margin: 0 auto 28px;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 3px solid rgba(0,200,224,0.4);
-      box-shadow: 0 0 28px rgba(0,200,224,0.2), 0 12px 40px rgba(0,0,0,0.4);
-      transition: all 0.4s ease;
-    }
-    .profile-photo-ring {
-      display: none;
-    }
-    .profile-photo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-      transition: transform 0.5s ease;
-    }
-    .coach-card:hover .profile-photo-wrapper {
-      border-color: var(--aqua);
-      box-shadow: 0 0 40px rgba(0,200,224,0.45), 0 16px 48px rgba(0,0,0,0.5);
-    }
-    .coach-card:hover .profile-photo {
-      transform: scale(1.04);
-    }
-
-    /* ── BIODATA TABLE ── */
-    .biodata-table {
-      width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.07);
-      margin-bottom: 28px;
-      text-align: left;
-    }
-    .biodata-row {
-      display: grid;
-      grid-template-columns: 42% 58%;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      transition: background 0.2s;
-    }
-    .biodata-row:last-child { border-bottom: none; }
-    .biodata-row:hover { background: rgba(0,200,224,0.04); }
-    .biodata-label {
-      font-size: 0.74rem;
-      font-weight: 600;
-      color: var(--aqua);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 11px 14px;
-      border-right: 1px solid rgba(255,255,255,0.06);
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      background: rgba(0,200,224,0.03);
-    }
-    .biodata-value {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.8);
-      padding: 11px 14px;
-      display: flex;
-      align-items: center;
-      word-break: break-word;
     }
 
     /* ── CTA BOX ── */
@@ -643,10 +328,10 @@
   </div>
   <div class="page-hero-content">
     <div class="breadcrumb">
-      <a href="index.html">Beranda</a> › <span>Daftar Pelatih</span>
+      <a href="index.html">Beranda</a> › <a href="pelatih.html">Pelatih</a> › <span>Pelatih Dasar</span>
     </div>
-    <h1>DAFTAR<br><em>PELATIH</em></h1>
-    <p class="page-hero-sub">Kenali instruktur berpengalaman kami yang siap membimbing Anda dari pemula hingga menjadi atlet berprestasi.</p>
+    <h1>PELATIH<br><em>DASAR</em></h1>
+    <p class="page-hero-sub">Jajaran instruktur renang untuk tingkat dasar pemula di Pyramid Oasis Swimming Club.</p>
   </div>
 </div>
 
@@ -654,40 +339,39 @@
 <div class="page-content">
 
   <div style="text-align:center; margin-bottom: 64px;">
-    <span class="section-label reveal">Instruktur Kami</span>
-    <h2 class="section-title reveal">Tim Pelatih<br>Profesional</h2>
-    <p class="section-desc reveal" style="margin: 0 auto 0;">Berlatih langsung dengan pelatih berlisensi nasional dan berpengalaman untuk mendapatkan hasil yang optimal.</p>
+    <span class="section-label reveal">Daftar Pelatih</span>
+    <h2 class="section-title reveal">Pelatih Tingkat<br>Dasar</h2>
+    <p class="section-desc reveal" style="margin: 0 auto 0;">Dibimbing oleh instruktur berpengalaman untuk adaptasi air yang aman dan pembentukan teknik dasar yang kokoh.</p>
   </div>
 
   <!-- GRID KARTU PELATIH -->
   <div class="coach-grid">
     
-    <!-- ─── CARD 1: PELATIH DASAR ─── -->
-    <a href="pelatih-dasar.html" class="photo-card card-dasar reveal" style="text-decoration: none;">
-      <div class="photo-card-front">
-        <div class="card-icon">🌊</div>
-        <h3 class="card-title">Pelatih Dasar</h3>
-        <span class="card-subtitle">Level Pemula</span>
+    <!-- ─── CARDS PLACEHOLDER ─── -->
+    <div class="coach-card reveal">
+      <div class="coach-avatar-wrapper">
+        <div class="coach-avatar-ring"></div>
+        <div class="coach-avatar-css">PD</div>
       </div>
-    </a>
-
-    <!-- ─── CARD 2: PELATIH SEMI PRO ─── -->
-    <a href="pelatih-semi-pro.html" class="photo-card card-semi reveal" style="text-decoration: none;">
-      <div class="photo-card-front">
-        <div class="card-icon">⚡</div>
-        <h3 class="card-title">Pelatih Semi Pro</h3>
-        <span class="card-subtitle">Level Menengah</span>
+      <span class="coach-badge">Lisensi C</span>
+      <h3 class="coach-name">Nama Pelatih</h3>
+      <p class="coach-bio">Deskripsi singkat mengenai pengalaman melatih, filosofi mengajar, atau riwayat kepelatihan instruktur.</p>
+      <div class="coach-skills">
+        <span class="coach-tag">Water Familiarization</span>
+        <span class="coach-tag">Water Safety</span>
+        <span class="coach-tag">Gaya Dada</span>
       </div>
-    </a>
-
-    <!-- ─── CARD 3: PELATIH PRO ─── -->
-    <a href="pelatih-pro.html" class="photo-card card-pro reveal" style="text-decoration: none;">
-      <div class="photo-card-front">
-        <div class="card-icon">🏆</div>
-        <h3 class="card-title">Pelatih Pro</h3>
-        <span class="card-subtitle">Level Atlet</span>
+      <div class="coach-stats">
+        <div class="stat-item">
+          <span class="stat-num">3+ Thn</span>
+          <span class="stat-txt">Pengalaman</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">1:8</span>
+          <span class="stat-txt">Rasio Siswa</span>
+        </div>
       </div>
-    </a>
+    </div>
 
   </div>
   <!-- END GRID -->
@@ -735,11 +419,6 @@
     });
   }, { threshold: 0.08 });
   reveals.forEach(el => obs.observe(el));
-
-  // Toggle photo card (Ahmad Ghoits)
-  function toggleCard(card) {
-    card.classList.toggle('open');
-  }
 </script>
 </body>
 </html>
