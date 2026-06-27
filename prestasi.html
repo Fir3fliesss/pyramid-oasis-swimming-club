@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -122,6 +122,37 @@
     /* SECTION TITLE */
     .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; display: block; }
     .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--white); margin-bottom: 40px; line-height: 1.1; }
+
+    /* FILTER TABS */
+    .filter-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .filter-tab {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.7);
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .filter-tab:hover {
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .filter-tab.active {
+      background: linear-gradient(135deg, var(--gold), #ffdd57);
+      color: var(--navy);
+      border-color: transparent;
+      box-shadow: 0 8px 24px rgba(240,180,41,0.35);
+    }
 
     /* MEDAL CARDS */
     .medals-section { margin-bottom: 80px; }
@@ -288,7 +319,7 @@
   <!-- STATS -->
   <div class="stats-bar">
     <div class="stat-item reveal">
-      <span class="stat-num" data-target="7">0</span>
+      <span class="stat-num" data-target="9">0</span>
       <div class="stat-label">Total Medali</div>
     </div>
     <div class="stat-item reveal">
@@ -296,7 +327,7 @@
       <div class="stat-label">Medali Emas</div>
     </div>
     <div class="stat-item reveal">
-      <span class="stat-num" data-target="3">0</span>
+      <span class="stat-num" data-target="5">0</span>
       <div class="stat-label">Kejuaraan Diikuti</div>
     </div>
     <div class="stat-item reveal">
@@ -309,8 +340,18 @@
   <div class="medals-section">
     <span class="section-label reveal">Koleksi Medali</span>
     <h2 class="section-title reveal">Hasil terbaik atlet kami</h2>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs reveal">
+      <button class="filter-tab active" data-filter="all">Semua Kejuaraan</button>
+      <button class="filter-tab" data-filter="kabupaten">🏆 Tingkat Kabupaten/Kota</button>
+      <button class="filter-tab" data-filter="provinsi">⚡ Tingkat Provinsi</button>
+      <button class="filter-tab" data-filter="nasional">🏅 Tingkat Nasional</button>
+    </div>
+
     <div class="medals-grid">
-      <div class="medal-card gold reveal">
+      <!-- KABUPATEN -->
+      <div class="medal-card gold reveal" data-category="kabupaten">
         <span class="medal-emoji">🥇</span>
         <div class="medal-rank">Juara 1</div>
         <div class="medal-event">Gaya Bebas 50m — KU 10–12 Tahun</div>
@@ -320,7 +361,21 @@
           <span class="medal-tag level">Kab. Bogor</span>
         </div>
       </div>
-      <div class="medal-card reveal">
+
+      <!-- NASIONAL -->
+      <div class="medal-card gold reveal" data-category="nasional">
+        <span class="medal-emoji">🥈</span>
+        <div class="medal-rank">Juara 2</div>
+        <div class="medal-event">Gaya Dada 100m — KU 12–14 Tahun</div>
+        <div class="medal-detail">Indonesia Open Aquatic Championship<br>Stadion Akuatik GBK Jakarta</div>
+        <div class="medal-tags">
+          <span class="medal-tag year">2025</span>
+          <span class="medal-tag level">Nasional</span>
+        </div>
+      </div>
+
+      <!-- PROVINSI -->
+      <div class="medal-card reveal" data-category="provinsi">
         <span class="medal-emoji">🥈</span>
         <div class="medal-rank">Juara 2</div>
         <div class="medal-event">Gaya Punggung 100m — KU 13–15 Tahun</div>
@@ -330,17 +385,45 @@
           <span class="medal-tag level">Jawa Barat</span>
         </div>
       </div>
-      <div class="medal-card reveal">
+
+      <!-- KABUPATEN -->
+      <div class="medal-card reveal" data-category="kabupaten">
+        <span class="medal-emoji">🥇</span>
+        <div class="medal-rank">Juara 1</div>
+        <div class="medal-event">Gaya Ganti Estafet — Bogor Ngojay</div>
+        <div class="medal-detail">Bogor Ngojay Cup 2024<br>Kabupaten Bogor</div>
+        <div class="medal-tags">
+          <span class="medal-tag year">2024</span>
+          <span class="medal-tag level">Kab. Bogor</span>
+        </div>
+      </div>
+
+      <!-- NASIONAL -->
+      <div class="medal-card reveal" data-category="nasional">
+        <span class="medal-emoji">🥉</span>
+        <div class="medal-rank">Juara 3</div>
+        <div class="medal-event">Gaya Bebas 100m — KU 12–14 Tahun</div>
+        <div class="medal-detail">Kejuaraan Nasional Antar Klub Se-Indonesia<br>(KRAPSI 2025)</div>
+        <div class="medal-tags">
+          <span class="medal-tag year">2025</span>
+          <span class="medal-tag level">Nasional</span>
+        </div>
+      </div>
+
+      <!-- PROVINSI -->
+      <div class="medal-card gold reveal" data-category="provinsi">
         <span class="medal-emoji">🥇</span>
         <div class="medal-rank">Juara 1</div>
         <div class="medal-event">Gaya Dada 50m — KU 8–10 Tahun</div>
-        <div class="medal-detail">Kompetisi Renang<br>Tingkat Kecamatan</div>
+        <div class="medal-detail">West Java Open Aquatic Championship<br>Se-Jawa Barat</div>
         <div class="medal-tags">
           <span class="medal-tag year">2024</span>
-          <span class="medal-tag level">Kecamatan</span>
+          <span class="medal-tag level">Jawa Barat</span>
         </div>
       </div>
-      <div class="medal-card reveal">
+
+      <!-- KABUPATEN -->
+      <div class="medal-card reveal" data-category="kabupaten">
         <span class="medal-emoji">🥇</span>
         <div class="medal-rank">Juara 1</div>
         <div class="medal-event">Gaya Bebas 100m — KU 13–15 Tahun</div>
@@ -350,7 +433,21 @@
           <span class="medal-tag level">Kota Bogor</span>
         </div>
       </div>
-      <div class="medal-card reveal">
+
+      <!-- KABUPATEN -->
+      <div class="medal-card reveal" data-category="kabupaten">
+        <span class="medal-emoji">🏅</span>
+        <div class="medal-rank">Juara 4</div>
+        <div class="medal-event">Gaya Bebas O2SN Pelajar</div>
+        <div class="medal-detail">O2SN Tingkat Kabupaten<br>Kec. Cibinong Kab. Bogor</div>
+        <div class="medal-tags">
+          <span class="medal-tag year">2025</span>
+          <span class="medal-tag level">Kab. Bogor</span>
+        </div>
+      </div>
+
+      <!-- KABUPATEN -->
+      <div class="medal-card reveal" data-category="kabupaten">
         <span class="medal-emoji">🥉</span>
         <div class="medal-rank">Juara 3</div>
         <div class="medal-event">Estafet 4×50m — Campuran</div>
@@ -358,16 +455,6 @@
         <div class="medal-tags">
           <span class="medal-tag year">2024</span>
           <span class="medal-tag level">Kota Bogor</span>
-        </div>
-      </div>
-      <div class="medal-card gold reveal">
-        <span class="medal-emoji">🥇</span>
-        <div class="medal-rank">Juara 1</div>
-        <div class="medal-event">Gaya Kupu-Kupu 50m — KU 10–12 Tahun</div>
-        <div class="medal-detail">Debut Perdana Pyramid Oasis<br>Kompetisi Tingkat Kecamatan</div>
-        <div class="medal-tags">
-          <span class="medal-tag year">2023</span>
-          <span class="medal-tag level">Kecamatan</span>
         </div>
       </div>
     </div>
@@ -477,6 +564,35 @@
     });
   }, { threshold: 0.3 });
   document.querySelectorAll('.stats-bar').forEach(el => counterObs.observe(el));
+
+  // Filter medals/achievements by level
+  const filterTabs = document.querySelectorAll('.filter-tab');
+  const medalCards = document.querySelectorAll('.medal-card');
+
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      filterTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const filterValue = tab.getAttribute('data-filter');
+
+      medalCards.forEach(card => {
+        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+          card.style.display = 'block';
+          // Trigger entry transition
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(15px)';
+          setTimeout(() => {
+            card.style.transition = 'all 0.4s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 50);
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
 </script>
 </body>
 </html>
