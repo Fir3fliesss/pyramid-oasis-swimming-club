@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pelatih Dasar — Pyramid Oasis Swimming Club</title>
-  <meta name="description" content="Daftar pelatih renang tingkat dasar berlisensi nasional di Pyramid Oasis Swimming Club — membimbing pemula dari nol.">
+  <meta name="description" content="Daftar pelatih renang tingkat dasar berlisensi nasional di Pyramid Oasis Swimming Club.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <style>
@@ -12,8 +12,6 @@
       --navy: #061b33; --deep: #0a2545; --ocean: #0d5fa3;
       --wave: #1a9aef; --aqua: #00c8e0; --gold: #f0b429;
       --white: #ffffff; --muted: #5a7a90;
-      --tier-color: var(--wave);
-      --tier-glow: rgba(26,154,239,0.25);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -63,249 +61,174 @@
 
     /* ── PAGE HERO ── */
     .page-hero {
-      min-height: 45vh; display: flex; align-items: flex-end; padding-top: 80px;
+      min-height: 46vh; display: flex; align-items: flex-end; padding-top: 80px;
       position: relative; overflow: hidden; background: var(--navy);
     }
     .page-hero-bg {
       position: absolute; inset: -20px;
       background: url('foto_profil.jpeg') center/cover no-repeat;
-      opacity: 0.15; filter: blur(4px);
+      opacity: 0.18; filter: blur(3px);
     }
     .page-hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(6,27,51,0.4) 0%, rgba(6,27,51,0.97) 100%);
+      background: linear-gradient(to bottom, rgba(6,27,51,0.3) 0%, rgba(6,27,51,0.97) 100%);
     }
-    .hero-accent {
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, transparent, var(--tier-color), transparent);
-    }
-    .hero-ripples {
-      position: absolute; bottom: 0; left: 0; right: 0; height: 160px; overflow: hidden;
-    }
-    .ripple {
-      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-      border-radius: 50%; border: 2px solid rgba(26,154,239,0.12);
-      animation: rippleOut 4s ease-out infinite;
-    }
+    .hero-line { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--wave), transparent); }
+    .hero-ripples { position: absolute; bottom: 0; left: 0; right: 0; height: 160px; overflow: hidden; }
+    .ripple { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); border-radius: 50%; border: 2px solid rgba(26,154,239,0.12); animation: rippleOut 4s ease-out infinite; }
     .ripple:nth-child(1) { width: 300px; height: 150px; animation-delay: 0s; }
     .ripple:nth-child(2) { width: 600px; height: 300px; animation-delay: 1.3s; }
     .ripple:nth-child(3) { width: 900px; height: 450px; animation-delay: 2.6s; }
-    @keyframes rippleOut {
-      from { opacity: 0.5; transform: translateX(-50%) scaleX(0.3); }
-      to   { opacity: 0;   transform: translateX(-50%) scaleX(1); }
-    }
+    @keyframes rippleOut { from { opacity: 0.5; transform: translateX(-50%) scaleX(0.3); } to { opacity: 0; transform: translateX(-50%) scaleX(1); } }
     .page-hero-content { position: relative; z-index: 2; padding: 0 48px 60px; width: 100%; }
-    .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 20px; flex-wrap: wrap; }
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 18px; flex-wrap: wrap; }
     .breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
     .breadcrumb a:hover { color: var(--aqua); }
-    .breadcrumb span { color: var(--tier-color); }
-    .tier-badge-hero {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(26,154,239,0.1); border: 1px solid rgba(26,154,239,0.3);
-      padding: 6px 16px; border-radius: 100px; margin-bottom: 16px;
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--tier-color);
+    .breadcrumb span { color: var(--wave); }
+    .tier-pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(26,154,239,0.12); border: 1px solid rgba(26,154,239,0.3);
+      padding: 6px 16px; border-radius: 100px; margin-bottom: 14px;
+      font-size: 0.73rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--wave);
     }
-    .tier-badge-hero::before { content: '🌊'; font-size: 0.9rem; }
     .page-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 7vw, 6rem); letter-spacing: 4px; line-height: 0.9; }
-    .page-hero h1 em { font-style: normal; color: var(--tier-color); }
-    .page-hero-sub { font-size: 1rem; color: rgba(255,255,255,0.5); font-weight: 300; margin-top: 14px; max-width: 520px; line-height: 1.65; }
+    .page-hero h1 em { font-style: normal; color: var(--wave); }
+    .page-hero-sub { font-size: 1rem; color: rgba(255,255,255,0.5); font-weight: 300; margin-top: 14px; max-width: 500px; line-height: 1.65; }
 
-    /* ── CONTENT WRAPPER ── */
-    .page-content { max-width: 1100px; margin: 0 auto; padding: 80px 48px 100px; }
+    /* ── CONTENT ── */
+    .page-content { max-width: 1000px; margin: 0 auto; padding: 80px 48px 100px; }
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--wave); margin-bottom: 12px; display: block; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--white); line-height: 1.1; margin-bottom: 14px; }
+    .section-desc { color: rgba(255,255,255,0.45); font-size: 0.97rem; line-height: 1.7; max-width: 480px; margin: 0 auto; }
 
-    /* ── SECTION HEADER ── */
-    .section-header { text-align: center; margin-bottom: 72px; }
-    .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--tier-color); margin-bottom: 12px; display: block; }
-    .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--white); margin-bottom: 16px; line-height: 1.1; }
-    .section-desc { color: rgba(255,255,255,0.45); font-size: 1rem; line-height: 1.7; max-width: 520px; margin: 0 auto; }
+    /* ── COACH CARD GRID ── */
+    .coach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 32px; }
 
-    /* ── COACH LIST ── */
-    .coach-list { display: flex; flex-direction: column; gap: 40px; }
-
-    /* ── COACH PROFILE CARD (2026 Design) ── */
-    .coach-profile {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 0;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.07);
+    /* ── COACH CARD (SHORT PROFILE) ── */
+    .coach-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 28px;
+      padding: 40px 32px 32px;
+      text-align: center;
+      position: relative;
       overflow: hidden;
-      position: relative;
       transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      display: flex; flex-direction: column; align-items: center;
     }
-    .coach-profile::before {
+    .coach-card::before {
       content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--tier-color), rgba(0,200,224,0.3));
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--wave), var(--aqua));
+      opacity: 0; transition: opacity 0.3s;
     }
-    .coach-profile:hover {
-      border-color: rgba(26,154,239,0.22);
-      box-shadow: 0 32px 80px rgba(26,154,239,0.1), 0 0 0 1px rgba(26,154,239,0.08);
-      transform: translateY(-4px);
+    .coach-card:hover {
+      border-color: rgba(26,154,239,0.25);
+      box-shadow: 0 24px 60px rgba(26,154,239,0.12);
+      transform: translateY(-6px);
     }
-    .coach-profile:hover::before { opacity: 1; }
+    .coach-card:hover::before { opacity: 1; }
 
-    /* Photo Panel */
-    .coach-photo-panel {
+    /* Photo */
+    .coach-photo-wrap {
       position: relative;
-      background: linear-gradient(160deg, rgba(26,154,239,0.08) 0%, rgba(6,27,51,0.6) 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 32px;
-      border-right: 1px solid rgba(255,255,255,0.06);
-    }
-    .coach-photo-frame {
-      position: relative;
-      width: 180px;
-      height: 220px;
-      border-radius: 20px;
+      width: 140px; height: 170px;
+      border-radius: 18px;
       overflow: hidden;
       border: 2px solid rgba(26,154,239,0.3);
-      box-shadow: 0 0 40px rgba(26,154,239,0.15), 0 16px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 0 30px rgba(26,154,239,0.15), 0 8px 30px rgba(0,0,0,0.35);
       margin-bottom: 24px;
       transition: all 0.4s ease;
     }
-    .coach-profile:hover .coach-photo-frame {
-      border-color: var(--tier-color);
-      box-shadow: 0 0 60px rgba(26,154,239,0.35), 0 20px 50px rgba(0,0,0,0.5);
+    .coach-card:hover .coach-photo-wrap {
+      border-color: var(--wave);
+      box-shadow: 0 0 48px rgba(26,154,239,0.35), 0 12px 40px rgba(0,0,0,0.45);
     }
-    .coach-photo-frame img {
+    .coach-photo-wrap img {
       width: 100%; height: 100%;
       object-fit: cover; object-position: center top;
-      display: block;
-      transition: transform 0.5s ease;
+      display: block; transition: transform 0.45s ease;
     }
-    .coach-profile:hover .coach-photo-frame img { transform: scale(1.04); }
-
-    /* CSS avatar fallback */
+    .coach-card:hover .coach-photo-wrap img { transform: scale(1.05); }
     .coach-photo-placeholder {
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3.5rem; color: var(--tier-color); letter-spacing: 2px;
-      background: linear-gradient(135deg, var(--deep), rgba(26,154,239,0.08));
+      font-family: 'Bebas Neue', sans-serif; font-size: 3rem;
+      color: var(--wave); background: linear-gradient(135deg, var(--deep), rgba(26,154,239,0.08));
     }
 
-    .coach-number {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.85rem; letter-spacing: 3px;
-      color: rgba(255,255,255,0.2);
-      text-align: center;
-    }
-
-    /* Info Panel */
-    .coach-info-panel {
-      padding: 44px 48px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .coach-info-top {}
-    .coach-tier-tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--tier-color);
-      background: rgba(26,154,239,0.08);
-      border: 1px solid rgba(26,154,239,0.2);
+    /* Badge */
+    .coach-badge {
+      display: inline-block;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--wave);
+      background: rgba(26,154,239,0.1);
+      border: 1px solid rgba(26,154,239,0.25);
       padding: 5px 14px; border-radius: 100px;
-      margin-bottom: 16px;
-    }
-    .coach-name-2026 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(1.8rem, 2.5vw, 2.4rem);
-      color: var(--white);
-      line-height: 1.05;
-      margin-bottom: 8px;
-      letter-spacing: -0.5px;
-    }
-    .coach-title-sub {
-      font-size: 0.88rem; color: rgba(255,255,255,0.4);
-      font-weight: 400; margin-bottom: 28px;
+      margin-bottom: 14px;
     }
 
-    /* Biodata Table */
-    .biodata-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.07);
-      margin-bottom: 28px;
+    /* Name */
+    .coach-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem; color: var(--white);
+      margin-bottom: 12px; line-height: 1.15;
     }
-    .biodata-cell {
-      background: rgba(6,27,51,0.6);
-      padding: 14px 18px;
-      transition: background 0.2s;
-    }
-    .biodata-cell:hover { background: rgba(26,154,239,0.04); }
-    .biodata-cell-label {
-      font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--tier-color);
-      margin-bottom: 4px; display: flex; align-items: center; gap: 5px;
-    }
-    .biodata-cell-value {
-      font-size: 0.9rem; color: rgba(255,255,255,0.82);
-      font-weight: 500; line-height: 1.4;
-    }
-    .biodata-cell.full-width {
-      grid-column: 1 / -1;
+
+    /* Bio */
+    .coach-bio {
+      font-size: 0.9rem; line-height: 1.65;
+      color: rgba(255,255,255,0.58);
+      margin-bottom: 20px;
+      flex: 1;
     }
 
     /* Tags */
-    .coach-tags-row {
-      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;
+    .coach-tags {
+      display: flex; flex-wrap: wrap; gap: 7px;
+      justify-content: center; margin-bottom: 28px;
     }
-    .coach-tag-2026 {
-      font-size: 0.73rem; font-weight: 500;
-      color: rgba(255,255,255,0.7);
-      background: rgba(255,255,255,0.04);
+    .coach-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.72rem; font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
-      padding: 6px 14px; border-radius: 100px;
-      transition: all 0.25s ease;
+      padding: 5px 12px; border-radius: 100px;
+      transition: all 0.25s;
     }
-    .coach-tag-2026:hover {
+    .coach-tag:hover {
       background: rgba(26,154,239,0.1);
       border-color: rgba(26,154,239,0.3);
       color: var(--white);
     }
 
-    /* Stats Row */
-    .coach-stats-row {
-      display: flex; gap: 32px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255,255,255,0.07);
+    /* CTA Button */
+    .btn-profile {
+      display: inline-flex; align-items: center; gap: 8px;
+      width: 100%;
+      justify-content: center;
+      padding: 13px 28px;
+      border-radius: 100px;
+      background: rgba(26,154,239,0.1);
+      border: 1.5px solid rgba(26,154,239,0.35);
+      color: var(--wave);
+      font-size: 0.88rem; font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      letter-spacing: 0.3px;
     }
-    .stat-block { display: flex; flex-direction: column; }
-    .stat-block-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem; color: var(--tier-color);
-      line-height: 1; letter-spacing: 1px;
+    .btn-profile:hover {
+      background: linear-gradient(135deg, var(--wave), var(--aqua));
+      border-color: transparent;
+      color: var(--navy);
+      box-shadow: 0 8px 28px rgba(26,154,239,0.35);
+      transform: translateY(-1px);
     }
-    .stat-block-label {
-      font-size: 0.68rem; color: rgba(255,255,255,0.35);
-      text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px;
-    }
-
-    /* ── EMPTY STATE ── */
-    .empty-state {
-      text-align: center;
-      padding: 80px 40px;
-      border: 1px dashed rgba(26,154,239,0.2);
-      border-radius: 28px;
-      color: rgba(255,255,255,0.25);
-    }
-    .empty-state-icon { font-size: 3rem; margin-bottom: 16px; opacity: 0.4; }
-    .empty-state-text { font-size: 0.9rem; line-height: 1.6; }
+    .btn-profile .arrow { transition: transform 0.2s; }
+    .btn-profile:hover .arrow { transform: translateX(3px); }
 
     /* ── CTA BOX ── */
     .cta-box {
@@ -314,11 +237,7 @@
       padding: 56px 48px; text-align: center; margin-top: 80px;
       position: relative; overflow: hidden;
     }
-    .cta-box::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--tier-color), transparent);
-    }
+    .cta-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--wave), transparent); }
     .cta-box h2 { font-family: 'DM Serif Display', serif; font-size: 2.2rem; margin-bottom: 14px; }
     .cta-box p { color: rgba(255,255,255,0.45); margin-bottom: 32px; font-size: 1rem; line-height: 1.6; }
     .btn-primary {
@@ -330,18 +249,14 @@
     .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,200,224,0.35); }
 
     /* ── FOOTER ── */
-    footer {
-      background: #040f1e; padding: 32px 48px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
-    }
+    footer { background: #040f1e; padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
     .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 2px; color: rgba(255,255,255,0.4); }
     .footer-logo span { color: var(--aqua); }
     .footer-links { display: flex; gap: 24px; }
     .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--aqua); }
 
-    /* ── REVEAL ANIMATION ── */
+    /* ── REVEAL ── */
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
@@ -352,19 +267,11 @@
       .hamburger { display: flex; }
       .page-content { padding: 56px 28px 72px; }
       .page-hero-content { padding: 0 28px 50px; }
-      .coach-profile { grid-template-columns: 220px 1fr; }
-      .coach-info-panel { padding: 36px 32px; }
-    }
-    @media (max-width: 768px) {
-      .coach-profile { grid-template-columns: 1fr; }
-      .coach-photo-panel { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 36px 24px; }
-      .coach-info-panel { padding: 32px 28px; }
-      .biodata-grid { grid-template-columns: 1fr; }
-      .coach-stats-row { gap: 20px; flex-wrap: wrap; }
     }
     @media (max-width: 640px) {
       .page-content { padding: 40px 20px 56px; }
       .page-hero-content { padding: 0 20px 40px; }
+      .coach-grid { grid-template-columns: 1fr; }
       .cta-box { padding: 40px 24px; }
       footer { flex-direction: column; text-align: center; padding: 24px 20px; }
     }
@@ -403,21 +310,17 @@
 <div class="page-hero">
   <div class="page-hero-bg"></div>
   <div class="page-hero-overlay"></div>
-  <div class="hero-accent"></div>
+  <div class="hero-line"></div>
   <div class="hero-ripples">
-    <div class="ripple"></div>
-    <div class="ripple"></div>
-    <div class="ripple"></div>
+    <div class="ripple"></div><div class="ripple"></div><div class="ripple"></div>
   </div>
   <div class="page-hero-content">
     <div class="breadcrumb">
-      <a href="index.html">Beranda</a> ›
-      <a href="pelatih.html">Pelatih</a> ›
-      <span>Pelatih Dasar</span>
+      <a href="index.html">Beranda</a> › <a href="pelatih.html">Pelatih</a> › <span>Pelatih Dasar</span>
     </div>
-    <div class="tier-badge-hero">Level Dasar</div>
+    <div class="tier-pill">🌊 Level Dasar</div>
     <h1>PELATIH<br><em>DASAR</em></h1>
-    <p class="page-hero-sub">Instruktur berpengalaman yang siap membimbing dari nol — pengenalan air yang aman dan teknik dasar yang kokoh.</p>
+    <p class="page-hero-sub">Instruktur berpengalaman yang membimbing dari nol — pengenalan air yang aman dan teknik dasar yang kokoh.</p>
   </div>
 </div>
 
@@ -426,81 +329,35 @@
 
   <div class="section-header">
     <span class="section-label reveal">Tim Instruktur</span>
-    <h2 class="section-title reveal">Pelatih Tingkat<br>Dasar</h2>
-    <p class="section-desc reveal">Dibimbing oleh instruktur berlisensi untuk membangun fondasi renang yang kuat sejak awal.</p>
+    <h2 class="section-title reveal">Pelatih Tingkat Dasar</h2>
+    <p class="section-desc reveal">Kenali pelatih renang kami yang siap membimbing dari level pemula.</p>
   </div>
 
-  <!-- DAFTAR PELATIH -->
-  <div class="coach-list">
+  <div class="coach-grid">
 
-    <!-- ── COACH 1 ── -->
-    <div class="coach-profile reveal">
-      <div class="coach-photo-panel">
-        <div class="coach-photo-frame">
-          <!-- Ganti src dengan foto pelatih, atau biarkan placeholder -->
-          <div class="coach-photo-placeholder">P1</div>
-        </div>
-        <div class="coach-number">COACH · 01</div>
+    <!-- ── COACH 1 — ganti data sesuai aslinya ── -->
+    <div class="coach-card reveal">
+      <div class="coach-photo-wrap">
+        <!-- Kalau sudah ada foto: <img src="foto_pelatih1.jpg" alt="Nama Pelatih"> -->
+        <div class="coach-photo-placeholder">P1</div>
       </div>
-      <div class="coach-info-panel">
-        <div class="coach-info-top">
-          <div class="coach-tier-tag">Pelatih Dasar</div>
-          <h3 class="coach-name-2026">Nama Pelatih</h3>
-          <p class="coach-title-sub">Jabatan / Spesialisasi</p>
-
-          <div class="biodata-grid">
-            <div class="biodata-cell">
-              <div class="biodata-cell-label">📋 Lisensi</div>
-              <div class="biodata-cell-value">—</div>
-            </div>
-            <div class="biodata-cell">
-              <div class="biodata-cell-label">📅 Bergabung</div>
-              <div class="biodata-cell-value">—</div>
-            </div>
-            <div class="biodata-cell">
-              <div class="biodata-cell-label">🎂 TTL</div>
-              <div class="biodata-cell-value">—</div>
-            </div>
-            <div class="biodata-cell">
-              <div class="biodata-cell-label">🏫 Pendidikan</div>
-              <div class="biodata-cell-value">—</div>
-            </div>
-            <div class="biodata-cell full-width">
-              <div class="biodata-cell-label">📌 Prestasi / Catatan</div>
-              <div class="biodata-cell-value">—</div>
-            </div>
-          </div>
-
-          <div class="coach-tags-row">
-            <span class="coach-tag-2026">Water Familiarization</span>
-            <span class="coach-tag-2026">Water Safety</span>
-            <span class="coach-tag-2026">Gaya Dada</span>
-          </div>
-        </div>
-
-        <div class="coach-stats-row">
-          <div class="stat-block">
-            <span class="stat-block-num">—</span>
-            <span class="stat-block-label">Tahun Pengalaman</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-block-num">—</span>
-            <span class="stat-block-label">Siswa Dibimbing</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-block-num">—</span>
-            <span class="stat-block-label">Sertifikasi</span>
-          </div>
-        </div>
+      <span class="coach-badge">Pelatih Renang</span>
+      <h3 class="coach-name">Nama Pelatih</h3>
+      <p class="coach-bio">Deskripsi singkat pelatih — pengalaman, spesialisasi, atau filosofi melatih.</p>
+      <div class="coach-tags">
+        <span class="coach-tag">🏊 Gaya Dada</span>
+        <span class="coach-tag">💧 Water Safety</span>
+        <span class="coach-tag">🎖 Lisensi C</span>
       </div>
+      <a href="profil-pelatih1.html" class="btn-profile">
+        Lihat Profil Lengkap <span class="arrow">→</span>
+      </a>
     </div>
     <!-- ── END COACH 1 ── -->
 
-    <!-- ── COACH 2 (Tambahkan bila ada) ── -->
-    <!-- Duplikat blok coach-profile di atas dan ganti datanya -->
+    <!-- ── Duplikat kartu di atas untuk menambah pelatih ── -->
 
   </div>
-  <!-- END DAFTAR PELATIH -->
 
   <!-- CTA BOX -->
   <div class="cta-box reveal">
@@ -510,7 +367,6 @@
   </div>
 
 </div>
-<!-- END PAGE-CONTENT -->
 
 <footer>
   <div class="footer-logo">PYRAMID<span>OASIS</span></div>
@@ -526,19 +382,14 @@
 <script>
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
-
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
   function closeMobile() { mobileMenu.classList.remove('open'); }
-
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 100);
-        obs.unobserve(e.target);
-      }
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 100); obs.unobserve(e.target); }
     });
   }, { threshold: 0.06 });
   reveals.forEach(el => obs.observe(el));
