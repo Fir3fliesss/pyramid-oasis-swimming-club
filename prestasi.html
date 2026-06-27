@@ -154,6 +154,66 @@
       box-shadow: 0 8px 24px rgba(240,180,41,0.35);
     }
 
+    /* SELECTION CARDS (PILIHAN KEJUARAAN) */
+    .selection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-bottom: 72px;
+    }
+    .selection-card {
+      background: linear-gradient(135deg, rgba(6, 27, 51, 0.85), rgba(10, 37, 69, 0.95));
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 28px;
+      padding: 40px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .selection-card:hover {
+      border-color: rgba(240,180,41,0.3);
+      box-shadow: 0 20px 48px rgba(240,180,41,0.15);
+      transform: translateY(-6px);
+    }
+    .selection-card .card-icon {
+      font-size: 3.2rem;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 0 10px rgba(240,180,41,0.3));
+    }
+    .selection-card .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .selection-card .card-desc {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 20px;
+    }
+    .selection-card .btn-select {
+      background: rgba(240,180,41,0.1);
+      border: 1px solid rgba(240,180,41,0.3);
+      color: var(--gold);
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.25s;
+    }
+    .selection-card:hover .btn-select {
+      background: linear-gradient(135deg, var(--gold), #ffdd57);
+      color: var(--navy);
+      border-color: transparent;
+      box-shadow: 0 6px 16px rgba(240,180,41,0.3);
+    }
+
     /* MEDAL CARDS */
     .medals-section { margin-bottom: 80px; }
     .medals-grid {
@@ -260,12 +320,14 @@
       .page-content { padding: 56px 28px; }
       .page-hero-content { padding: 0 28px 50px; }
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .selection-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
       .medals-grid { grid-template-columns: repeat(2, 1fr); }
       .timeline::before { left: 56px; }
     }
     @media (max-width: 640px) {
       .page-content { padding: 40px 20px; }
       .page-hero-content { padding: 0 20px 40px; }
+      .selection-grid { grid-template-columns: 1fr; }
       .medals-grid { grid-template-columns: 1fr; }
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
       .tl-year { font-size: 1rem; min-width: 44px; }
@@ -333,6 +395,35 @@
     <div class="stat-item reveal">
       <span class="stat-num" data-target="2023">0</span>
       <div class="stat-label">Pertama Kompetisi</div>
+    </div>
+  </div>
+
+  <!-- PILIHAN TINGKAT KEJUARAAN (SELECTION CARDS) -->
+  <div style="text-align:center; margin-bottom: 40px; margin-top: 24px;">
+    <span class="section-label reveal">Kategori Kejuaraan</span>
+    <h2 class="section-title reveal" style="margin-bottom: 0;">Pilih Tingkatan</h2>
+  </div>
+  <div class="selection-grid">
+    <!-- KABUPATEN -->
+    <div class="selection-card reveal" onclick="quickFilter('kabupaten')">
+      <div class="card-icon">🏆</div>
+      <h3 class="card-title">Kabupaten / Kota</h3>
+      <p class="card-desc">Kompetisi antar klub dan kejuaraan pelajar tingkat kabupaten dan kota.</p>
+      <button class="btn-select">Lihat Medali</button>
+    </div>
+    <!-- PROVINSI -->
+    <div class="selection-card reveal" onclick="quickFilter('provinsi')">
+      <div class="card-icon">⚡</div>
+      <h3 class="card-title">Kejuaraan Provinsi</h3>
+      <p class="card-desc">Kejuaraan terbuka dan kompetisi prestasi tingkat regional Jawa Barat.</p>
+      <button class="btn-select">Lihat Medali</button>
+    </div>
+    <!-- NASIONAL -->
+    <div class="selection-card reveal" onclick="quickFilter('nasional')">
+      <div class="card-icon">🏅</div>
+      <h3 class="card-title">Kejuaraan Nasional</h3>
+      <p class="card-desc">Kompetisi elit tingkat nasional mempertemukan klub terbaik se-Indonesia.</p>
+      <button class="btn-select">Lihat Medali</button>
     </div>
   </div>
 
@@ -593,6 +684,16 @@
       });
     });
   });
+
+  // Quick filter function for category cards
+  function quickFilter(category) {
+    const targetTab = document.querySelector(`.filter-tab[data-filter="${category}"]`);
+    if (targetTab) {
+      targetTab.click();
+      // Smooth scroll to medals grid
+      document.querySelector('.medals-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 </script>
 </body>
 </html>
