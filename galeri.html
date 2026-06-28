@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -186,6 +186,18 @@
     .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--aqua); }
 
+    /* Highlight effect for target item */
+    @keyframes pulse-highlight {
+      0% { box-shadow: 0 0 0 0px rgba(0, 200, 224, 0.7); transform: scale(1.02); }
+      50% { box-shadow: 0 0 0 15px rgba(0, 200, 224, 0); transform: scale(1.04); }
+      100% { box-shadow: 0 0 0 0px rgba(0, 200, 224, 0); transform: scale(1.02); }
+    }
+    .galeri-item.highlighted {
+      animation: pulse-highlight 2s ease-in-out 3;
+      border: 2px solid var(--aqua);
+      z-index: 10;
+    }
+
     /* REVEAL */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -271,6 +283,16 @@
 
   <!-- MASONRY GRID -->
   <div class="galeri-grid" id="galeriGrid">
+    <!-- INARA CIBINONG -->
+    <div class="galeri-item reveal" data-cat="kompetisi" id="inara-cibinong">
+      <img src="foto_inara_cibinong.jpg" alt="Inara Anindya Putri" style="width: 100%; display: block; border-radius: 16px;">
+      <div class="galeri-overlay">
+        <div class="galeri-info">
+          <span class="galeri-caption">Inara Anindya Putri — Juara 1 SD Kec. Cibinong 2026</span>
+          <span class="galeri-cat-tag">Kompetisi</span>
+        </div>
+      </div>
+    </div>
     <div class="galeri-item reveal" data-cat="latihan">
       <div class="galeri-placeholder"><span class="galeri-ph-icon">🏊</span><span class="galeri-ph-text">Sesi Latihan Pagi<br>Ganti dengan foto asli</span></div>
       <div class="galeri-overlay"><div class="galeri-info"><span class="galeri-caption">Latihan pagi — Gaya Bebas</span><span class="galeri-cat-tag">Latihan</span></div></div>
@@ -363,6 +385,39 @@
     const titles = { semua: 'Semua Foto', latihan: 'Foto Latihan', kompetisi: 'Foto Kompetisi', kegiatan: 'Foto Kegiatan' };
     document.querySelector('.filter-title').textContent = titles[cat] || 'Semua Foto';
   }
+
+  // Handle Highlight and Auto-filter from URL
+  window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const highlightId = urlParams.get('highlight');
+    if (highlightId) {
+      const targetItem = document.getElementById(highlightId);
+      if (targetItem) {
+        // 1. Get the category of target item
+        const cat = targetItem.getAttribute('data-cat');
+        
+        // 2. Activate the corresponding category button if needed
+        if (cat) {
+          const btn = Array.from(document.querySelectorAll('.filter-btn')).find(b => {
+            const attr = b.getAttribute('onclick');
+            return attr && attr.includes(`'${cat}'`);
+          });
+          if (btn) {
+            filterGaleri(btn, cat);
+          }
+        }
+        
+        // 3. Scroll to the item after animations are ready
+        setTimeout(() => {
+          targetItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetItem.classList.add('highlighted');
+          setTimeout(() => {
+            targetItem.classList.remove('highlighted');
+          }, 6000);
+        }, 600);
+      }
+    }
+  });
 </script>
 </body>
 </html>
