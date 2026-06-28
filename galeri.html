@@ -464,39 +464,43 @@
   }
 
   // Handle Highlight and Auto-filter from URL
-  window.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const highlightId = urlParams.get('highlight');
-    if (highlightId) {
-      const targetItem = document.getElementById(highlightId);
-      if (targetItem) {
-        // 1. Get the category of target item
-        const cat = targetItem.getAttribute('data-cat');
-        
-        // 2. Activate the corresponding category button if needed
-        if (cat) {
-          const btn = Array.from(document.querySelectorAll('.filter-btn')).find(b => {
-            const attr = b.getAttribute('onclick');
-            return attr && attr.includes(`'${cat}'`);
-          });
-          if (btn) {
-            filterGaleri(btn, cat);
+  window.addEventListener('load', () => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const highlightId = urlParams.get('highlight');
+      if (highlightId) {
+        const targetItem = document.getElementById(highlightId);
+        if (targetItem) {
+          // 1. Get the category of target item
+          const cat = targetItem.getAttribute('data-cat');
+          
+          // 2. Activate the corresponding category button if needed
+          if (cat) {
+            const btn = Array.from(document.querySelectorAll('.filter-btn')).find(b => {
+              const attr = b.getAttribute('onclick');
+              return attr && attr.includes(`'${cat}'`);
+            });
+            if (btn) {
+              filterGaleri(btn, cat);
+            }
           }
-        }
-        
-        // 3. Scroll to the item and open its lightbox zoom
-        setTimeout(() => {
-          targetItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          targetItem.classList.add('highlighted');
           
-          // Trigger lightbox modal zoom
-          openLightbox(targetItem);
-          
+          // 3. Scroll to the item and open its lightbox zoom
           setTimeout(() => {
-            targetItem.classList.remove('highlighted');
-          }, 6000);
-        }, 600);
+            targetItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetItem.classList.add('highlighted');
+            
+            // Trigger lightbox modal zoom
+            openLightbox(targetItem);
+            
+            setTimeout(() => {
+              targetItem.classList.remove('highlighted');
+            }, 6000);
+          }, 600);
+        }
       }
+    } catch (err) {
+      console.error("Highlight error:", err);
     }
   });
 
