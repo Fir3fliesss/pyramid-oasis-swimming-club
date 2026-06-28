@@ -252,6 +252,22 @@
     }
     .medal-athlete::before { content: '👤'; font-size: 0.72rem; }
 
+    /* EMPTY STATE */
+    .medals-empty {
+      text-align: center;
+      padding: 60px 24px;
+      border: 1px dashed rgba(255,255,255,0.12);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.02);
+    }
+    .medals-empty-icon { font-size: 3rem; margin-bottom: 16px; opacity: 0.5; }
+    .medals-empty-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; letter-spacing: 2px;
+      color: rgba(255,255,255,0.4); margin-bottom: 10px;
+    }
+    .medals-empty-sub { font-size: 0.9rem; color: rgba(255,255,255,0.25); line-height: 1.6; }
+
     /* TIMELINE */
     .timeline-section { margin-bottom: 80px; }
     .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
@@ -438,6 +454,14 @@
       <button class="filter-tab active" data-filter="all">Semua Kejuaraan</button>
       <button class="filter-tab" data-filter="kabupaten">🏆 Tingkat Kabupaten/Kota</button>
       <button class="filter-tab" data-filter="provinsi">⚡ Tingkat Provinsi</button>
+      <button class="filter-tab" data-filter="nasional">🏅 Tingkat Nasional</button>
+    </div>
+
+    <!-- Empty state -->
+    <div class="medals-empty" id="medalsEmpty" style="display:none;">
+      <div class="medals-empty-icon">🏊</div>
+      <div class="medals-empty-title">Belum Ada Prestasi</div>
+      <div class="medals-empty-sub">Sedang dalam persiapan — nantikan penampilan perdana kami di tingkat ini!</div>
     </div>
 
     <div class="medals-grid">
@@ -640,11 +664,12 @@
       tab.classList.add('active');
 
       const filterValue = tab.getAttribute('data-filter');
+      const emptyEl = document.getElementById('medalsEmpty');
+      let visibleCount = 0;
 
       medalCards.forEach(card => {
         if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
           card.style.display = 'block';
-          // Trigger entry transition
           card.style.opacity = '0';
           card.style.transform = 'translateY(15px)';
           setTimeout(() => {
@@ -652,10 +677,14 @@
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
           }, 50);
+          visibleCount++;
         } else {
           card.style.display = 'none';
         }
       });
+
+      // Tampilkan empty state jika tidak ada kartu yang cocok
+      if (emptyEl) emptyEl.style.display = visibleCount === 0 ? 'block' : 'none';
     });
   });
 
