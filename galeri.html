@@ -202,6 +202,41 @@
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /* LIGHTBOX MODAL */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(6, 27, 51, 0.95);
+      backdrop-filter: blur(10px);
+      display: none; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .lightbox.active { display: flex; opacity: 1; }
+    .lightbox-content-wrapper {
+      position: relative; max-width: 90%; max-height: 85vh;
+      display: flex; flex-direction: column; align-items: center;
+      transform: scale(0.9); transition: transform 0.3s ease;
+    }
+    .lightbox.active .lightbox-content-wrapper { transform: scale(1); }
+    .lightbox-img {
+      max-width: 100%; max-height: 75vh;
+      border-radius: 16px; border: 2px solid rgba(255,255,255,0.1);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+      object-fit: contain;
+    }
+    .lightbox-caption {
+      margin-top: 16px; color: var(--white); font-weight: 500;
+      font-size: 0.95rem; text-align: center; max-width: 600px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .lightbox-close {
+      position: absolute; top: 24px; right: 24px;
+      color: rgba(255,255,255,0.6); font-size: 2.5rem; font-weight: 300;
+      cursor: pointer; transition: all 0.2s;
+      width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; background: rgba(255,255,255,0.05);
+    }
+    .lightbox-close:hover { color: var(--white); background: rgba(255,255,255,0.15); transform: rotate(90deg); }
+
     @media (max-width: 1024px) {
       nav { padding: 18px 28px; }
       .nav-links { display: none; }
@@ -284,7 +319,7 @@
   <!-- MASONRY GRID -->
   <div class="galeri-grid" id="galeriGrid">
     <!-- INARA CIBINONG -->
-    <div class="galeri-item reveal" data-cat="kompetisi" id="inara-cibinong">
+    <div class="galeri-item reveal" data-cat="kompetisi" id="inara-cibinong" onclick="openLightbox(this)">
       <img src="foto_inara_cibinong.jpg" alt="Inara Anindya Putri" style="width: 100%; height: 280px; object-fit: cover; object-position: center; display: block; border-radius: 16px;">
       <div class="galeri-overlay">
         <div class="galeri-info">
@@ -295,7 +330,7 @@
     </div>
 
     <!-- ZALFA DEPOK -->
-    <div class="galeri-item reveal" data-cat="kompetisi" id="zalfa-depok">
+    <div class="galeri-item reveal" data-cat="kompetisi" id="zalfa-depok" onclick="openLightbox(this)">
       <img src="foto_zalfa_depok.jpg" alt="Zalfa Syafhira Firman" style="width: 100%; height: 280px; object-fit: cover; object-position: center; display: block; border-radius: 16px;">
       <div class="galeri-overlay">
         <div class="galeri-info">
@@ -352,6 +387,15 @@
   </div>
 
 </div>
+
+  <!-- LIGHTBOX MODAL -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <div class="lightbox-content-wrapper" onclick="event.stopPropagation()">
+      <img class="lightbox-img" id="lightboxImg" src="" alt="Zoomed Image">
+      <div class="lightbox-caption" id="lightboxCaption">Caption</div>
+    </div>
+  </div>
 
 <footer>
   <div class="footer-logo">AQUA<span>SPARTAN</span></div>
@@ -428,6 +472,40 @@
         }, 600);
       }
     }
+  });
+
+  // Lightbox Modal Logic
+  function openLightbox(item) {
+    const img = item.querySelector('img');
+    if (!img) return;
+    const caption = item.querySelector('.galeri-caption').textContent;
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    
+    lightboxImg.src = img.src;
+    lightboxCaption.textContent = caption;
+    
+    lightbox.style.display = 'flex';
+    // Force layout reflow
+    lightbox.offsetHeight;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
+    lightbox.classList.remove('active');
+    setTimeout(() => {
+      lightbox.style.display = 'none';
+      document.body.style.overflow = '';
+    }, 300);
+  }
+
+  // Close lightbox on Escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
   });
 </script>
 </body>
