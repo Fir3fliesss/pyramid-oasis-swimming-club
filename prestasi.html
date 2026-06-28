@@ -381,19 +381,19 @@
   <!-- STATS -->
   <div class="stats-bar">
     <div class="stat-item reveal">
-      <span class="stat-num" data-target="9">0</span>
+      <span class="stat-num" id="stat-total">0</span>
       <div class="stat-label">Total Medali</div>
     </div>
     <div class="stat-item reveal">
-      <span class="stat-num" data-target="4">0</span>
+      <span class="stat-num" id="stat-gold">0</span>
       <div class="stat-label">Medali Emas</div>
     </div>
     <div class="stat-item reveal">
-      <span class="stat-num" data-target="5">0</span>
+      <span class="stat-num" id="stat-kejuaraan">0</span>
       <div class="stat-label">Kejuaraan Diikuti</div>
     </div>
     <div class="stat-item reveal">
-      <span class="stat-num" data-target="2023">0</span>
+      <span class="stat-num" id="stat-pertama">0</span>
       <div class="stat-label">Pertama Kompetisi</div>
     </div>
   </div>
@@ -635,9 +635,44 @@
   }, { threshold: 0.1 });
   reveals.forEach(el => obs.observe(el));
 
-  function animateCounter(el) {
-    const target = parseInt(el.getAttribute('data-target'));
-    if (!target) return;
+  // ── AUTO-HITUNG STATISTIK DARI DATA KARTU MEDALI ──
+  function computeStats() {
+    const cards = document.querySelectorAll('.medal-card');
+
+    // 1. Total medali = jumlah semua kartu
+    const total = cards.length;
+
+    // 2. Medali Emas = kartu dengan medal-rank "Juara 1"
+    let gold = 0;
+    cards.forEach(card => {
+      const rank = card.querySelector('.medal-rank');
+      if (rank && rank.textContent.trim() === 'Juara 1') gold++;
+    });
+
+    // 3. Kejuaraan Diikuti = jumlah nama kejuaraan unik (dari medal-detail)
+    const comps = new Set();
+    cards.forEach(card => {
+      const detail = card.querySelector('.medal-detail');
+      if (detail) {
+        // Ambil teks pertama sebelum <br> atau seluruh teks sebagai identitas kejuaraan
+        const rawText = detail.innerText.trim().split('\n')[0].trim();
+        comps.add(rawText);
+      }
+    });
+    const kejuaraan = comps.size;
+
+    // 4. Pertama Kompetisi = tahun terkecil dari semua medal-tag.year
+    let minYear = Infinity;
+    document.querySelectorAll('.medal-tag.year').forEach(tag => {
+      const yr = parseInt(tag.textContent.trim());
+      if (yr && yr < minYear) minYear = yr;
+    });
+    if (minYear === Infinity) minYear = new Date().getFullYear();
+
+    return { total, gold, kejuaraan, pertama: minYear };
+  }
+
+  function animateNum(el, target) {
     let current = 0;
     const step = Math.max(1, target / 60);
     const timer = setInterval(() => {
@@ -646,15 +681,21 @@
       else el.textContent = Math.floor(current);
     }, 20);
   }
-  const counterObs = new IntersectionObserver((entries) => {
+
+  const statsBar = document.querySelector('.stats-bar');
+  const statsObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.querySelectorAll('[data-target]').forEach(animateCounter);
-        counterObs.unobserve(e.target);
+        const { total, gold, kejuaraan, pertama } = computeStats();
+        animateNum(document.getElementById('stat-total'), total);
+        animateNum(document.getElementById('stat-gold'), gold);
+        animateNum(document.getElementById('stat-kejuaraan'), kejuaraan);
+        animateNum(document.getElementById('stat-pertama'), pertama);
+        statsObs.unobserve(e);
       }
     });
   }, { threshold: 0.3 });
-  document.querySelectorAll('.stats-bar').forEach(el => counterObs.observe(el));
+  if (statsBar) statsObs.observe(statsBar);
 
   // Filter medals/achievements by level
   const filterTabs = document.querySelectorAll('.filter-tab');
